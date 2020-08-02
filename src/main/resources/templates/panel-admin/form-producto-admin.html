@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+
+<section class="super-section">
+
+
+    <nav th:replace="plantilla/menu-panel-admin :: menu-panel-admin"/>
+
+
+    <div class="container" style="transition: all 1s ease;">
+
+
+        <div class="text-center mb-4" style="margin-top: 100px">
+            <div class="section-title" style="color: #1e29a4;animation: 5s infinite pulse;">
+                <h2 class="font-weight-bold sombra-texto">NUEVO PRODUCTO</h2>
+            </div>
+
+            <div>
+                <p class="sombra-texto">Ingresa tus metodos de pago de forma segura</p>
+            </div>
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb site-pagination">
+                    <li class="breadcrumb-item"><a th:href="@{/panel-admin}">Panel</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/panel-admin/productos-admin}">Productos</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Nuevo Producto</li>
+                </ol>
+            </nav>
+        </div>
+
+        <hr>
+
+        <form class="contact-form" method="post" th:action="@{/panel-admin/productos-admin/guardar-producto}"
+            enctype="multipart/form-data">
+
+            <input type="hidden" th:value="${producto.id}" name="id">
+
+            <div class="row">
+
+                <div class="col-md-6 d-flex justify-content-end">
+                    <div class="card my-4" style="max-width: 300px!important;">
+                        <img th:if="${#strings.contains(producto.imagen, 'sin-imagen')}" th:src="@{/img/sin-imagen.png}" class="img-fluid" width="300px">
+                        <img th:unless="${#strings.contains(producto.imagen, 'sin-imagen')}" th:src="@{'/panel-admin/uploads/' + ${producto.imagen}}" class="img-fluid" width="300px">
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center justify-content-start">
+                    <div class="campo d-flex justify-content-center align-items-center">
+                        <input type="file" name="file" width="200px" style="border: none!important;background: transparent!important;">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="label-pago">Codigo</label>
+                        <input type="text" class="form-control"
+                               placeholder="Codigo" min="0" maxlength="4" name="codigo" th:value="${producto.codigo}">
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="label-pago"> Categoría</label>
+                        <select name="categoria" class="form-control" th:value="${producto.categoria}">
+                            <option value="" selected disabled>Seleccionar</option>
+                            <option th:each="cat : ${listaCategorias}" th:text="${cat}"
+                                    th:selected="(${producto.categoria} == ${cat})"
+                            ></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label class="label-pago">Nombre</label>
+                        <input type="text" class="form-control"
+                               placeholder="Nombre del Producto" name="nombre" th:value="${producto.nombre}">
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="label-pago">Cantidad</label>
+                        <input type="number" class="form-control"
+                               placeholder="Cantidad" min="0" name="cantidad" th:value="${producto.cantidad}">
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="label-pago">Precio de Compra ( $ )</label>
+                        <input type="number" class="form-control"
+                               placeholder="Precio de Compra" min="0" name="precioCompra" th:value="${producto.precioCompra}">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="label-pago">Precio de Venta ( $ )</label>
+                        <input type="number" class="form-control"
+                               placeholder="Precio de Venta" min="0" name="precioVenta" th:value="${producto.precioVenta}">
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="label-pago">Estado</label>
+
+                        <select name="enabled" class="form-control" th:value="${producto.enabled}">
+                            <option th:value="1" th:selected="(${producto.enabled})">Activo</option>
+                            <option value="0" th:selected="(!${producto.enabled})">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="label-pago">Descripción</label>
+                        <div style="border-radius: 25px;font-size: 0.8rem">
+                            <input type="hidden" id="x" name="descripcion" th:value="${producto.descripcion}">
+                            <trix-editor input="x"></trix-editor>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="label-pago">Fecha</label>
+                        <input type="date" name="fecha" th:value="${{producto.fecha}}">
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="site-btn submit-order-btn button w-50">Guardar</button>
+            </div>
+
+        </form>
+
+
+    </div>
+</section>
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+</body>
+</html>
+
+
+
+

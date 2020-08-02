@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+<section class="admin-section">
+
+    <div class="container">
+
+        <div th:replace="plantilla/menu-panel-clientes :: menu-panel-clientes"/>
+
+
+        <div class="text-center mt-5 mb-1 checkout-cart">
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb site-pagination">
+                    <li class="breadcrumb-item"><a th:href="@{/panel-cliente}">Panel</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/panel-cliente/ordenes-cliente}"> Ordenes</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Detalle Orden</li>
+                </ol>
+            </nav>
+
+
+            <div class="section-title" style="color: #1e29a4;animation: 5s infinite pulse;">
+                <h2 class="font-weight-bold sombra-texto">ORDEN DE COMPRA # <span th:text="${orden.id}">02154</span></h2>
+            </div>
+
+
+            <div>
+                <p>Orden generada el <span th:text="${fechaFormateada}"></span></p>
+            </div>
+
+
+            <div class="text-left checkout-form">
+                <div class="text-center cf-title" style="margin-bottom: 20px!important;">Información del Cliente</div>
+
+                <div class="row my-2 d-flex justify-content-around">
+
+                    <col-sm-3 class="mx-4">
+                        <label class="label-pago">Fecha de compra:</label>
+                        <p th:text="${#dates.format(orden.fechaRecepcionOrden, 'dd/MMM/yyyy HH:mm')}">25 de Junio de 2020 9:30 pm</p>
+                    </col-sm-3>
+
+
+                    <col-sm-3 class="mx-4">
+                        <label class="label-pago">Nombre del Cliente:</label>
+                        <p th:text="${orden.direccionUsuario.nombre}">Christian Alexis Rodriguez</p>
+                    </col-sm-3>
+
+
+                    <col-sm-3 class="mx-4">
+                        <label class="label-pago">Email:</label>
+                        <p th:text="${orden.usuario.username}">alexroguez59@gmail.com</p>
+                    </col-sm-3>
+
+                    <col-sm-3 class="mx-4">
+                        <label class="label-pago">Telefono:</label>
+                        <p th:text="${orden.direccionUsuario.telefono}">300 344 39 01</p>
+                    </col-sm-3>
+                </div>
+
+
+                <hr>
+
+                <div class="text-center cf-title" style="margin-bottom: 20px!important;">Información de Envio /
+                    Facturación
+                </div>
+
+                <div class="row my-2 d-flex justify-content-around">
+
+                    <col-sm-3 class="mx-4">
+                        <label class="label-pago">Pais:</label>
+                        <p>Colombia</p>
+                    </col-sm-3>
+
+                    <col-sm-3 class="mx-4">
+                        <label class="label-pago">Departamento:</label>
+                        <p th:text="${orden.direccionUsuario.departamento}">Valle del Cauca</p>
+                    </col-sm-3>
+
+
+                    <col-sm-3 class="mx-4">
+                        <label class="label-pago">Ciudad:</label>
+                        <p th:text="${orden.direccionUsuario.ciudad}">Cali</p>
+                    </col-sm-3>
+
+
+                    <col-sm-3 class="mx-4">
+                        <label class="label-pago">Dirección:</label>
+                        <p th:text="${orden.direccionUsuario.direccion}">Calle 55bn # 2f-59</p>
+                    </col-sm-3>
+
+                </div>
+
+
+                <table class="table table-striped">
+                    <thead>
+                    <th>Tipo de Entrega</th>
+                    <th>Fecha de Entrega</th>
+                    <th>Tiempo Estimado</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <label th:text="${orden.metodoEnvio}">Estandar</label>
+                        </td>
+                        <td>
+                            <label th:text="${#dates.format(orden.fechaEntregaProducto, 'dd/MMM/yyyy')}">25/02/2020</label>
+                        </td>
+                        <td>
+                            <label><span th:text="${cantidadRestante}">25</span> dias</label>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <hr>
+
+
+                <div class="text-center cf-title" style="margin-bottom: 20px!important;">Información de Pago</div>
+
+
+                <table class="table">
+                    <thead class="thead-light">
+
+                    <tr>
+                        <th scope="col">Tarjeta Debito/Credito <img src="/img/creditcard.png"></th>
+                        <th scope="col"></th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    <tr>
+                        <td>
+                            <label class="label-pago text-primary" th:text="${orden.metodoPago.tipo}"></label>
+                            <label class="label-pago text-primary">******</label>
+                            <label class="label-pago text-primary" th:text="${#strings.substring(orden.metodoPago.numeroTarjeta,12,16)}">6045</label>
+                        </td>
+
+                        <td>
+                            <label class="label-pago text-primary">Usaste esta tarjeta</label>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+                <hr>
+
+
+                <div class="text-center cf-title" style="margin-bottom: 20px!important;">Información de la compra</div>
+
+                <p >A continuación se detallan los productos adquiridos:</p>
+
+                <table class="table table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="item : ${listaItemCarrito}">
+                        <td th:text="${item.producto.nombre}">Transistor</td>
+                        <td th:text="${item.producto.descripcion}">Lorem ipsum dolor sit. Lorem ipsum dolor sit.</td>
+                        <td th:text="'$' + ${#numbers.formatDecimal(item.producto.precioVenta, 0,'POINT',0,'POINT')}">$ 12.000</td>
+                        <td th:text="${item.cantidad}">2</td>
+                        <td th:text="'$' + ${#numbers.formatDecimal(item.subtotal, 0,'POINT',0,'POINT')}">$ 24.000</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+                <table class="ml-auto table-striped">
+                    <tbody>
+                    <tr>
+                        <td class="text-left" width="150px">Sub Total:</td>
+                        <td class="text-right"
+                            th:text="'$' + ${#numbers.formatDecimal(subtotal, 0,'POINT',0,'POINT')}">
+                            $ 150.000</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-left">Envio:</td>
+                        <td class="text-right" th:text="'$' + ${#numbers.formatDecimal(valorEnvio,0,'POINT',0,'POINT')}">$ 0</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-left">Valor Total:</td>
+                        <td class="text-right"
+                            th:text="'$' + ${#numbers.formatDecimal(orden.grandTotal, 0,'POINT',0,'POINT')}"
+                        >$ 150.000</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-center mt-5">
+                    <small>Gracias por tu compra, recuerda presentar tu orden de compra para reclamar los productos
+                        adquiridos. Si deseas imprimir haz clic en el siguiente boton <a th:href="@{'/panel-cliente/ordenes-detalle-cliente/' + ${orden.id}(format=pdf)}">
+                            <i class="fas fa-print fa-2x"></i></a></small>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+</body>
+</html>

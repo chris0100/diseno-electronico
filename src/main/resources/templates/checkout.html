@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+<!-- Page info -->
+<div class="page-top-info">
+    <div class="container">
+        <h4>Finalizar Compra</h4>
+
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb site-pagination">
+                <li class="breadcrumb-item"> <a th:href="@{/}">Inicio</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/carrito}">Carrito</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+            </ol>
+        </nav>
+
+    </div>
+</div>
+<!-- Page info end -->
+
+
+<!-- checkout section  -->
+<section class="checkout-section spad">
+    <div class="container">
+
+
+        <form th:action="@{/enviar-orden}" method="post">
+            <div class="row mb-5">
+
+                <div class="col-lg-8 order-2 order-lg-1 p-3 checkout-cart">
+
+
+
+                    <div class="checkout-form" id="checkButtons">
+
+                        <div class="cf-title text-center">Información de Envio / Facturación</div>
+
+
+                        <div class="row">
+
+                            <div class="col-md-7">
+                                <p class="font-weight-bold" style="margin-bottom: 0 !important;">Recoger en el Local</p>
+                            </div>
+
+                            <div class="col-md-5">
+
+                                <div class="cf-radio-btns">
+                                    <div class="cfr-item">
+                                        <input type="radio" th:name="envio" id="envio-local"
+                                            th:value="${envioGratis}" th:checked="${checkbox} == 0"
+                                        >
+                                        <label for="envio-local">$0</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="col-md-7">
+                                <p class="font-weight-bold">Estandar</p>
+                            </div>
+
+                            <div class="col-md-5">
+
+                                <div class="cf-radio-btns address-rb">
+                                    <div class="cfr-item">
+                                        <input type="radio" th:name="envio" id="envio-estandar" th:checked="${checkbox} == 15000"
+                                               th:value="${envioEstandar}">
+                                        <label for="envio-estandar">$15.000</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <!--DIRECCION DE USUARIO-->
+                    <div class="row address-inputs contact-form">
+
+                        <!--<input type="hidden" name="idDireccionUsuario" th:value="${direccionUsuario.id}">-->
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="label-pago">Nombre</label>
+                                <input type="text" placeholder="Nombre Completo" name="nombre" class="form-control" th:value="${direccionUsuario.nombre}">
+                            </div>
+
+
+                            <div class="from-group">
+                                <label class="label-pago">Dirección</label>
+                                <input type="text" placeholder="Dirección" name="direccion" class="form-control" th:value="${direccionUsuario.direccion}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-grupo">
+                                <label class="label-pago">Telefono</label>
+                                <input type="text" placeholder="Telefono" name="telefono" class="form-control" th:value="${direccionUsuario.telefono}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="label-pago">Codigo Postal</label>
+                                <input type="text" placeholder="Codigo Postal" name="codigoPostal" class="form-control" th:value="${direccionUsuario.codigoPostal}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="label-pago">Departamento</label>
+                                <input type="text" placeholder="Departamento" name="departamento" class="form-control" th:value="${direccionUsuario.departamento}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="label-pago">Ciudad</label>
+                                <input type="text" placeholder="Ciudad" name="ciudad" class="form-control" th:value="${direccionUsuario.ciudad}">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="checkout-form mt-5">
+                        <div class="text-center cf-title">Información de Pago
+                        </div>
+                    </div>
+
+                    <div class="cf-title my-3">Tarjeta de Credito / Debito <img src="img/mastercart.png"></div>
+
+                    <div class="panel">
+
+                        <div id="collapse1" class="collapse show" aria-labelledby="headingOne"
+                             data-parent="#accordion">
+
+                            <div class="panel-body">
+
+                                <!--MUESTRA LISTA DE METODOS DE PAGO DE USUARIO-->
+                                <table class="table">
+                                    <thead class="thead-light">
+
+                                    <tr>
+                                        <th scope="col">Tarjetas Disponibles</th>
+                                        <th scope="col">Operacion</th>
+                                    </tr>
+
+                                    </thead>
+
+                                    <tbody>
+
+                                    <tr th:each="metodoPago : ${listaMetodosPago}">
+                                        <td>
+                                            <small th:text="${metodoPago.tipo}">Mastercard</small>  <small>******</small>
+                                            <small th:text="${#strings.substring(metodoPago.numeroTarjeta,12,16)}">6045</small>
+                                        </td>
+
+                                        <td>
+                                            <a th:href="@{/checkout?idMetodoPago=}+${metodoPago.id}" class="btn btn-warning btn-sm">Usar Esta tarjeta</a>
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+
+                                </table>
+
+
+
+
+
+
+
+                                <!--formulario para tarjeta-->
+                                <img src="/img/creditcard.png">
+
+                                <div class="contact-form">
+
+                                    <div class="row">
+
+                                        <!--<input type="hidden" name="idMetodoPago" th:value="${metodoPago.id}">-->
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="label-pago"> Tipo de Tarjeta</label>
+                                                <select name="tipo" class="form-control" th:value="${metodoPago.tipo}">
+                                                    <option value="Visa" th:selected="(${metodoPago.tipo} == 'Visa')">Visa</option>
+                                                    <option value="MasterCard" th:selected="(${metodoPago.tipo} == 'MasterCard')">MasterCard</option>
+                                                    <option value="Discover" th:selected="(${metodoPago.tipo} == 'Discover')">Discover</option>
+                                                    <option value="American Express" th:selected="(${metodoPago.tipo} == 'American Express')">American Express</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="label-pago">Nombre Titular</label>
+                                                <input type="text" class="form-control"
+                                                       placeholder="Nombre del Titular" th:value="${metodoPago.nombreTitular}" name="nombreTitular">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="row">
+
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label class="label-pago">Numero de Tarjeta</label>
+                                                <input type="text" class="form-control"
+                                                       placeholder="Numero de tarjeta" th:value="${metodoPago.numeroTarjeta}"
+                                                       maxlength="19" name="numeroTarjeta">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label class="label-pago">CVC</label>
+                                                <input type="text" class="form-control" placeholder="CVC"
+                                                       maxlength="3" name="cvc" th:value="${metodoPago.cvc}">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="label-pago"> Fecha de Expiracion</label>
+                                                <div class="d-flex justify-content-around">
+                                                    <select name="mesExpiracion" class="form-control" th:value="${metodoPago.mesExpiracion}">
+                                                        <option value="" disabled selected>Mes</option>
+                                                        <option value="Enero" th:selected="(${metodoPago.mesExpiracion} == 'Enero')">Enero</option>
+                                                        <option value="Febrero" th:selected="(${metodoPago.mesExpiracion} == 'Febrero')">Febrero</option>
+                                                        <option value="Marzo" th:selected="(${metodoPago.mesExpiracion} == 'Marzo')">Marzo</option>
+                                                        <option value="Abril" th:selected="(${metodoPago.mesExpiracion} == 'Abril')">Abril</option>
+                                                        <option value="Mayo" th:selected="(${metodoPago.mesExpiracion} == 'Mayo')">Mayo</option>
+                                                        <option value="Junio" th:selected="(${metodoPago.mesExpiracion} == 'Junio')">Junio</option>
+                                                        <option value="Julio" th:selected="(${metodoPago.mesExpiracion} == 'Julio')">Julio</option>
+                                                        <option value="Agosto" th:selected="(${metodoPago.mesExpiracion} == 'Agosto')">Agosto</option>
+                                                        <option value="Septiembre" th:selected="(${metodoPago.mesExpiracion} == 'Septiembre')">Septiembre</option>
+                                                        <option value="Octubre" th:selected="(${metodoPago.mesExpiracion} == 'Octubre')">Octubre</option>
+                                                        <option value="Noviembre" th:selected="(${metodoPago.mesExpiracion} == 'Noviembre')">Noviembre</option>
+                                                        <option value="Diembre" th:selected="(${metodoPago.mesExpiracion} == 'Diciembre')">Diciembre</option>
+                                                    </select>
+
+                                                    <select name="yearExpiracion" class="form-control" th:value="${metodoPago.yearExpiracion}">
+                                                        <option value="" disabled selected>Año</option>
+                                                        <option value="2021" th:selected="(${metodoPago.yearExpiracion} == '2020')">2020</option>
+                                                        <option value="2020" th:selected="(${metodoPago.yearExpiracion} == '2021')">2021</option>
+                                                        <option value="2022" th:selected="(${metodoPago.yearExpiracion} == '2022')">2022</option>
+                                                        <option value="2023" th:selected="(${metodoPago.yearExpiracion} == '2023')">2023</option>
+                                                        <option value="2024" th:selected="(${metodoPago.yearExpiracion} == '2024')">2024</option>
+                                                        <option value="2025" th:selected="(${metodoPago.yearExpiracion} == '2025')">2025</option>
+                                                        <option value="2026" th:selected="(${metodoPago.yearExpiracion} == '2026')">2026</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                    <button type="submit" class="site-btn submit-order-btn button">Enviar Orden</button>
+                </div>
+
+
+                <div class="col-lg-4 order-1 order-lg-2">
+                    <div class="checkout-cart">
+                        <h3>Tu carrito</h3>
+                        <ul class="product-list">
+
+                            <li th:each="itemCarrito : ${listaItemCarrito}">
+                                <img th:src="@{/panel-admin/uploads/}+${itemCarrito.producto.imagen}" class="img-thumbnail" width="150px">
+                                <h6 th:text="${itemCarrito.producto.nombre}">Contactor Siemens</h6>
+                                <p th:text="'$ ' + ${#numbers.formatDecimal(itemCarrito.subtotal, 0,'POINT',0,'POINT')}">$45.000</p>
+                                <hr>
+                            </li>
+
+                        </ul>
+                        <ul class="price-list">
+
+                            <li>Subtotal
+                                <span class="mr-5 small" th:text="'$ ' +
+                            ${#numbers.formatDecimal(carritoCompras.subTotal, 0,'POINT',0,'POINT')}"
+                                id="subtotal" th:value="${carritoCompras.subTotal}"
+                                >$70.000
+                                </span>
+                            </li>
+
+                            <li>Envio<span class="mr-5" id="envio"
+                                           value="0"
+                            >Gratis</span>
+                            </li>
+
+                            <!--<input type="hidden" th:name="idCarrito" th:value="${carritoCompras.id}">-->
+
+                            <li class="font-weight-bold">Total
+                                <span class="mr-5 small font-weight-bold" th:text="'$ ' +
+                            ${#numbers.formatDecimal(carritoCompras.subTotal, 0,'POINT',0,'POINT')}"
+                                id="total" th:value="${carritoCompras.subTotal}"
+                                >$70.000
+                                </span>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</section>
+<!-- checkout section end -->
+
+
+
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+
+<script th:inline="javascript">
+
+    function checkButtons() {
+        var el = document.getElementById('checkButtons');
+        var cb = document.getElementsByTagName('input');
+
+
+
+        //Se recorren los input radio
+        for (let i = 0; i < cb.length; i++) {
+            if (cb[i].type === 'radio'){
+                cb[i].onclick = actualiza;
+            }
+        }
+    }
+
+    //Funcion que actualiza
+    function actualiza(e) {
+        var subtotal = document.getElementById('subtotal');
+        var envio = document.getElementById('envio');
+        var total = document.getElementById('total');
+        envio.classList = 'mr-5 small';
+
+
+        let finalval = 0;
+        let valorSeleccionado = 0;
+        let subtotalval = parseFloat(subtotal.innerText.split(' ')[1]);
+
+        if (this.checked){
+            valorSeleccionado = parseFloat(this.value);
+            finalval += valorSeleccionado + (subtotalval * 1000);
+            finalval = new Intl.NumberFormat().format(finalval);
+            valorSeleccionado = new Intl.NumberFormat().format(valorSeleccionado);
+            total.innerHTML = `$ ${finalval}`;
+            envio.innerHTML = `$ ${valorSeleccionado}`;
+        }
+    }
+
+    checkButtons();
+
+
+</script>
+
+</body>
+</html>

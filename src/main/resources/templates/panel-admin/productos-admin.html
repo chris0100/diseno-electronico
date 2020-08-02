@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+<section class="super-section">
+
+
+    <nav th:replace="plantilla/menu-panel-admin :: menu-panel-admin"/>
+
+
+    <div class="container">
+
+        <div class="text-center" style="margin-top: 100px">
+            <div class="section-title" style="color: #1e29a4;animation: 5s infinite pulse;">
+                <h2 class="font-weight-bold sombra-texto">PRODUCTOS</h2>
+            </div>
+
+            <div>
+                <p class="sombra-texto">Realiza los cambios pertinentes en tu inventario</p>
+            </div>
+        </div>
+
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb site-pagination">
+                <li class="breadcrumb-item"><a th:href="@{/panel-admin}">Panel</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Productos</li>
+            </ol>
+        </nav>
+
+        <hr>
+
+
+        <div class="mb-4 text-right">
+            <a th:href="@{/panel-admin/productos-admin/form-producto}" class="btn btn-outline-primary btn-sm"><i
+                    class="fas fa-plus"></i>
+                Añadir Producto</a>
+        </div>
+
+
+        <div class="d-flex justify-content-center">
+
+
+            <div th:if="${#lists.isEmpty(productos)}">
+                <p>No hay datos en el sistema aún</p>
+            </div>
+
+
+            <table th:if="${not #lists.isEmpty(productos)}" id="example" class="mdl-data-table" style="min-width:100%;">
+                <thead style="background-color: rgb(65,139,202);color: white">
+                <tr>
+                    <th class="text-white">Codigo</th>
+                    <th class="text-white">Nombre</th>
+                    <th class="text-white">Cantidad</th>
+                    <th class="text-white">Precio de Compra</th>
+                    <th class="text-white">Precio de Venta</th>
+                    <th class="text-white">Utilidad</th>
+                    <th class="text-white">Estado</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+
+                <tr th:each="producto: ${productos}">
+                    <td th:text="${producto.codigo}">001</td>
+                    <td th:text="${producto.nombre}">Chip</td>
+                    <td th:text="${producto.cantidad}">4</td>
+                    <td th:text="${producto.precioCompra}">$ 25.000</td>
+                    <td th:text="${producto.precioVenta}">$ 30.000</td>
+                    <td th:text="${producto.utilidad}">$ 5.000</td>
+
+                    <td th:if="${producto.enabled}" th:text="Activo">Activo</td>
+                    <td th:unless="${producto.enabled}" th:text="Inactivo"></td>
+
+                    <td class="text-center">
+                        <div class="d-flex d-inline">
+                            <a th:href="@{/panel-admin/productos-admin/form-producto?productoId=}+${producto.id}">
+                                <i class="fas fa-edit fa-2x"></i>
+                            </a>
+
+                            <span class="ml-3"></span>
+
+                            <div th:if="${producto.enabled}">
+                                <a th:onclick="|modificarProducto(${producto.id}, 'Inactivar')|" style="cursor: pointer">
+                                    <i class="fas fa-minus-circle text-danger fa-2x"></i>
+                                </a>
+                            </div>
+
+                            <div th:unless="${producto.enabled}">
+                                <a th:onclick="|modificarProducto(${producto.id}, 'Activar')|" style="cursor: pointer">
+                                    <i class="fas fa-check-circle text-success fa-2x"></i>
+                                </a>
+                            </div>
+
+
+                        </div>
+
+                    </td>
+                </tr>
+
+
+                </tbody>
+            </table>
+
+
+            <!-- <p class="sombra-texto">Aun no tienes Productos disponibles</p>-->
+
+
+        </div>
+
+
+    </div>
+</section>
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+
+<script th:inline="javascript">
+
+    modificarProducto = (productoId, tipo) => {
+        const rutaInicial = window.location.href;
+        console.log(rutaInicial);
+
+        Swal.fire({
+            title: 'Esta seguro de ' + tipo.toLowerCase() + ' el producto con ID: ' + productoId,
+            text: "Esta accion puede ser revertida luego!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: tipo,
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.value) {
+                window.location.assign(rutaInicial+'/modificar-estado-producto/'+productoId+'/'+tipo);
+            }
+        })
+
+    }
+
+
+</script>
+
+</body>
+</html>

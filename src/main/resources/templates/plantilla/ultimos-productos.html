@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:fragment="ultimos-productos" class="product-slider owl-carousel">
+
+
+    <div class="product-item" th:each="producto : ${listaProductos}">
+        <div class="pi-pic">
+            <div class="tag-new"><a th:href="@{/info-producto/}+${producto.id}">VER MAS</a></div>
+            <img th:src="@{/panel-admin/uploads/}+${producto.imagen}" class="img-fluid">
+            <div class="pi-links" sec:authorize="hasRole('ROLE_USER')">
+                <a class="add-card" style="cursor: pointer"
+                   th:data1="${producto.nombre}" th:data2="${producto.imagen}"
+                   th:data3="${producto.cantidad}"
+                   th:data4="${producto.descripcion}" th:data5="${producto.id}"
+                   th:onclick="|addProductoCarrito(this.getAttribute('data1'),
+                                       this.getAttribute('data2'),
+                                        this.getAttribute('data3'), this.getAttribute('data4'), this.getAttribute('data5'))|"
+                   data-target="#exampleModal" data-toggle="modal">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span style="font-size: 8px;">AÑADIR AL CARRITO</span>
+                </a>
+            </div>
+        </div>
+        <div class="pi-text">
+            <h6 th:text="'$' + ${producto.precioVenta}">$35.000</h6>
+            <p th:text="${producto.nombre}">Breaker Spectra </p>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+</html>

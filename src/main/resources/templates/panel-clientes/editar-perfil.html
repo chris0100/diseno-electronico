@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+<section class="admin-section">
+    <div class="container">
+
+        <div th:replace="plantilla/menu-panel-clientes :: menu-panel-clientes"/>
+
+
+        <div class="text-center my-5">
+            <div class="section-title" style="color: #1e29a4;animation: 5s infinite pulse;">
+                <h2 class="font-weight-bold sombra-texto">EDITAR PERFIL</h2>
+            </div>
+        </div>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb site-pagination">
+                <li class="breadcrumb-item"> <a th:href="@{/panel-cliente}">Panel</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Editar Perfil</li>
+            </ol>
+        </nav>
+
+
+        <hr>
+
+
+        <form class="contact-form" th:action="@{/panel-cliente/editar-perfil-cliente}" method="post">
+
+            <input type="hidden" name="id" th:value="${usuario.id}">
+
+            <div class="campo d-flex justify-content-center align-items-center" >
+                <label class="label-pago">Nombre</label>
+                <input type="text" placeholder="Tu Nombre" name="nombre" th:value="${usuario.nombre}" class="form__input w-75" >
+            </div>
+
+            <div class="campo d-flex justify-content-center align-items-center">
+                <label class="label-pago">Email</label>
+                <input type="email" placeholder="Tu Email" name="username" th:value="${usuario.username}" class="form__input w-75"  >
+            </div>
+
+            <div class="campo d-flex justify-content-center align-items-center" >
+                <label class="label-pago">Telefono</label>
+                <input type="text" placeholder="Tu Telefono" name="telefono" th:value="${usuario.telefono}" class="form__input w-75"  >
+            </div>
+
+            <div class="campo descripcion d-flex justify-content-center align-items-center">
+                <label class="label-pago">Quien soy</label>
+                <div class="form__input w-75">
+                    <input type="hidden" id="x" name="descripcion" th:value="${usuario.descripcion}">
+                    <trix-editor input="x"></trix-editor>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="text-right col-8">
+                    <button class="site-btn button" type="submit">GUARDAR CAMBIOS</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</section>
+
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+</body>
+</html>

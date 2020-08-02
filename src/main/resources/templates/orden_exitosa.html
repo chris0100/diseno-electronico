@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+<section class="login-section">
+    <div class="container text-center" style="margin-top: 200px; margin-bottom: 200px">
+        <div class="row d-flex justify-content-center">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Orden Finalizada Exitosamente</h3>
+                </div>
+                <div class="card-body">
+                    <h5>Puede encontrar los detalles de la compra en el siguiente documento</h5>
+
+                    <a th:href="@{'/panel-cliente/ordenes-detalle-cliente/' + ${idOrden}}" role="button" class="btn btn-sm btn-light mb-3">
+                        <i class="fas fa-binoculars fa-2x"></i>
+                       Visualizar detalle de la Orden
+                    </a>
+
+                    <p th:if="${envioFinal}">Tu producto sera entregado el dia <span th:text="${#dates.format(fechaEntregaFinal, 'dd-MMM-yyyy')}"></span></p>
+
+                    <p th:unless="${envioFinal}">Cuando desees puedes reclamar el producto en los puntos de venta, tienes hasta 1 semana para hacerlo. <span></span></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+</body>
+</html>

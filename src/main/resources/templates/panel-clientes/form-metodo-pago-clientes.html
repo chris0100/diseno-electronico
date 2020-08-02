@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+<section class="admin-section">
+
+    <div class="container">
+
+        <div th:replace="plantilla/menu-panel-clientes :: menu-panel-clientes"/>
+
+
+        <div class="text-center mt-5 mb-4">
+            <div class="section-title" style="color: #1e29a4;animation: 5s infinite pulse;">
+                <h2 class="font-weight-bold sombra-texto">NUEVO METODO DE PAGO</h2>
+            </div>
+
+            <div>
+                <p class="sombra-texto">Ingresa tus metodos de pago de forma segura</p>
+            </div>
+
+
+        </div>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb site-pagination">
+                <li class="breadcrumb-item"> <a th:href="@{/panel-cliente}">Panel</a></li>
+                <li class="breadcrumb-item"> <a th:href="@{/panel-cliente/metodos-pago-cliente}">Pagos</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Nuevo</li>
+            </ol>
+        </nav>
+
+        <hr>
+
+
+        <img src="/img/creditcard.png">
+
+        <form class="contact-form" method="post" th:action="@{/panel-cliente/enviar-metodo-pago}">
+
+
+            <input type="hidden" name="id" th:value="${metodoPago.id}">
+
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="label-pago"> Tipo de Tarjeta</label>
+                        <select name="tipo" class="form-control" th:value="${metodoPago.tipo}">
+                            <option value="Visa" th:selected="(${metodoPago.tipo} == 'Visa')">Visa</option>
+                            <option value="MasterCard" th:selected="(${metodoPago.tipo} == 'MasterCard')">MasterCard</option>
+                            <option value="Discover" th:selected="(${metodoPago.tipo} == 'Discover')">Discover</option>
+                            <option value="American Express" th:selected="(${metodoPago.tipo} == 'American Express')">American Express</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="label-pago">Nombre Titular</label>
+                        <input type="text" class="form-control"
+                               placeholder="Nombre del Titular" name="nombreTitular" th:value="${metodoPago.nombreTitular}">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label class="label-pago">Numero de Tarjeta</label>
+                        <input type="text" class="form-control"
+                               placeholder="Numero de tarjeta" name="numeroTarjeta"
+                               maxlength="16" th:value="${metodoPago.numeroTarjeta}">
+                    </div>
+                </div>
+
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="label-pago">CVC</label>
+                        <input type="text" class="form-control" placeholder="CVC"
+                               maxlength="3" name="cvc" th:value="${metodoPago.cvc}">
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="label-pago"> Fecha de Expiracion</label>
+                        <div class="d-flex justify-content-around">
+                            <select name="mesExpiracion" class="form-control" th:value="${metodoPago.mesExpiracion}">
+                                <option value="" disabled selected>Mes</option>
+                                <option value="Enero" th:selected="(${metodoPago.mesExpiracion} == 'Enero')">Enero</option>
+                                <option value="Febrero" th:selected="(${metodoPago.mesExpiracion} == 'Febrero')">Febrero</option>
+                                <option value="Marzo" th:selected="(${metodoPago.mesExpiracion} == 'Marzo')">Marzo</option>
+                                <option value="Abril" th:selected="(${metodoPago.mesExpiracion} == 'Abril')">Abril</option>
+                                <option value="Mayo" th:selected="(${metodoPago.mesExpiracion} == 'Mayo')">Mayo</option>
+                                <option value="Junio" th:selected="(${metodoPago.mesExpiracion} == 'Junio')">Junio</option>
+                                <option value="Julio" th:selected="(${metodoPago.mesExpiracion} == 'Julio')">Julio</option>
+                                <option value="Agosto" th:selected="(${metodoPago.mesExpiracion} == 'Agosto')">Agosto</option>
+                                <option value="Septiembre" th:selected="(${metodoPago.mesExpiracion} == 'Septiembre')">Septiembre</option>
+                                <option value="Octubre" th:selected="(${metodoPago.mesExpiracion} == 'Octubre')">Octubre</option>
+                                <option value="Noviembre" th:selected="(${metodoPago.mesExpiracion} == 'Noviembre')">Noviembre</option>
+                                <option value="Diembre" th:selected="(${metodoPago.mesExpiracion} == 'Diciembre')">Diciembre</option>
+                            </select>
+
+                            <select name="yearExpiracion" class="form-control" th:value="${metodoPago.yearExpiracion}">
+                                <option value="" disabled selected>Año</option>
+                                <option value="2021" th:selected="(${metodoPago.yearExpiracion} == '2020')">2020</option>
+                                <option value="2020" th:selected="(${metodoPago.yearExpiracion} == '2021')">2021</option>
+                                <option value="2022" th:selected="(${metodoPago.yearExpiracion} == '2022')">2022</option>
+                                <option value="2023" th:selected="(${metodoPago.yearExpiracion} == '2023')">2023</option>
+                                <option value="2024" th:selected="(${metodoPago.yearExpiracion} == '2024')">2024</option>
+                                <option value="2025" th:selected="(${metodoPago.yearExpiracion} == '2025')">2025</option>
+                                <option value="2026" th:selected="(${metodoPago.yearExpiracion} == '2026')">2026</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="site-btn submit-order-btn button w-50">Guardar</button>
+            </div>
+
+        </form>
+
+
+
+    </div>
+
+
+</section>
+
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+</body>
+</html>

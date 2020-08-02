@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+
+    <div class="container text-center" style="margin-top: 200px; margin-bottom: 200px">
+        <div class="row d-flex justify-content-center">
+            <div class="card">
+                <div class="card-header">
+                    <h3>No tienes permiso para acceder a esta pagina</h3>
+                </div>
+                <div class="card-body">
+                    <h5>Debes tener otro rango de usuario para acceder</h5>
+                    <a th:href="@{/}" role="button" class="btn btn-sm btn-primary">Volver a inicio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+</body>
+</html>

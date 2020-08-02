@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<head th:fragment="common-header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css"
+          integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
+
+    <link rel="stylesheet" th:href="@{/css/trix.css}"/>
+
+    <!--NUEVOS ESTILOS -->
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" th:href="@{/css/new/flaticon.css}"/>
+    <link rel="stylesheet" th:href="@{/css/new/slicknav.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/new/jquery-ui.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/new/owl.carousel.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/new/animate.css}"/>
+    <!--    <link rel="stylesheet" href="/css/new/style.css"/>-->
+    <!--NUEVOS ESTILOS -->
+
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+    <!--TABLAS -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/4.0.0/material-components-web.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.material.min.css">
+
+
+    <link rel="shortcut icon" type="image/png" th:href="@{/img/logo-sin-fondo-icono.png}"/>
+
+
+    <!--ALERTAS-->
+    <link rel="stylesheet" th:href="@{/css/sweetalert2.min.css}"/>
+    <script th:src="@{/js/sweetalert2.min.js}"></script>
+
+
+    <link rel="stylesheet" th:href="@{/css/toastr.css}">
+
+
+    <!--para funcionalidad scrolli-->
+    <!-- para realizar la efecto scroll -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+    <style>
+        .scrolli {
+            visibility: hidden;
+        }
+    </style>
+
+    <title>Diseño Electronico</title>
+</head>
+
+
+<!-- START HERE -->
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!--barra de navegacion-->
+<div th:fragment="navbar">
+
+    <nav class="navbar navbar-expand-lg fixed-top barra-nav bg-primary" id="menu">
+        <div class="container">
+            <a th:href="@{/}" class="navbar-brand">
+                <img th:src="@{/img/logo-sin-fondo.png}" alt="logo-ppal" class="logo-ppal">
+            </a>
+
+            <!--para el collapse responsive-->
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!--contenido cuando colapsa-->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+
+                    <li sec:authorize="isAnonymous()" class="nav-item active">
+                        <a th:href="@{/}" class="nav-link texto-encabezado"><i class="fas fa-home"></i>
+                            <small>Inicio</small></a>
+                    </li>
+
+                    <li sec:authorize="hasRole('ROLE_USER')" class="nav-item active">
+                        <a th:href="@{/panel-cliente}" class="nav-link texto-encabezado"><i class="fas fa-home"></i>
+                            <small>Mi Panel</small></a>
+                    </li>
+
+                    <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item active">
+                        <a th:href="@{/panel-admin}" class="nav-link texto-encabezado"><i class="fas fa-home"></i>
+                            <small>Mi Panel</small></a>
+                    </li>
+
+                    <li class="nav-item"><a th:href="@{/servicios}" class="nav-link texto-encabezado"><i
+                            class="fas fa-briefcase"></i> <small>Servicios</small></a></li>
+
+                    <li class="nav-item"><a th:href="@{/catalogo}" class="nav-link texto-encabezado"><i
+                            class="fas fa-book-open"></i> <small>Catálogo</small></a></li>
+
+                    <li class="nav-item"><a th:href="@{/contactenos}" class="nav-link texto-encabezado"><i
+                            class="fas fa-id-card-alt"></i> <small>Contactenos</small></a></li>
+
+                    <li class="mx-3 nav-item"></li>
+
+                    <li sec:authorize="hasRole('ROLE_USER')" class="nav-item">
+                        <a th:href="@{/carrito}" class="nav-link texto-encabezado">
+                            <i class="fas fa-shopping-cart"></i> <small>Carrito</small>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div>
+            <div sec:authorize="!hasAnyRole('ROLE_USER','ROLE_ADMIN')"
+                 class="mr-5 d-flex mb-3 align-items-center"><i class="fas fa-user text-white"></i><a
+                    th:href="@{/login}"
+                    class="nav-link texto-encabezado"><small>Iniciar
+                Sesión</small></a></div>
+
+            <div sec:authorize="isAnonymous()"
+                 class="mr-5 d-flex align-items-center"><i class="fas fa-user-plus text-white"></i><a
+                    th:href="@{/registro}"
+                    class="nav-link texto-encabezado"><small>Registrarse</small></a></div>
+
+            <div sec:authorize="isAuthenticated()">
+                <form id="logoutForm" th:action="@{/logout}" method="post">
+                    <div class="mr-5 d-flex align-items-center">
+                        <i class="fas fa-sign-out-alt text-white"></i>
+                        <a
+                            onclick="document.getElementById('logoutForm').submit()"
+                            type="submit"
+                            class="nav-link texto-encabezado text-white font-weight-bold"
+                        >
+                            <small>Cerrar Sesión</small>
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </nav>
+</div>
+
+
+<!--footer-->
+<div th:fragment="footer">
+    <footer class="footer-section" id="site-footer">
+        <div class="footer__box">
+            <div class="container">
+
+                <div class="row mb-5">
+
+                    <div class="col-md-7">
+                        <h4 class="texto-heading-footer border-bottom">Atención al Cliente</h4>
+                        <p class="text-white"><i class="fas fa-home mr-2 mb-3"></i> Calle 55bn con Avenida 2f, Cali,
+                            Colombia</p>
+                        <p class="text-white"><i class="fas fa-envelope-open mr-2 mb-3"></i> Contacto:
+                            contacto@diseñoelectronico.com</p>
+                        <p class="text-white"><i class="fas fa-phone mr-2 mb-3"></i> WhatsApp: (57) 300 344 39 01</p>
+                    </div>
+
+                    <div class="col-md-5">
+                        <h4 class="texto-heading-footer border-bottom">Horario de Atención</h4>
+                        <p class="text-white mb-3"> Horario: Lunes a Viernes 7:30AM a 12:30PM y 1:30PM a 5:30PM</p>
+                        <p class="text-white">Los fines de semana no hay atención al público</p>
+                    </div>
+                </div>
+
+
+                <div class="row mb-3">
+
+                    <div class="col-md-7">
+                        <h4 class="texto-heading-footer border-bottom">Diseño Electrónico - Asistencia Avanzada</h4>
+                        <p class="footer-text">Somos una empresa con mas de diez años de experiencia en la reparación
+                            y mantenimiento de tarjetas electronicas a nivel industrial para el manejo principalmente de
+                            compresores, montacargas, retroexcavadoras entre otros.<br> <span
+                                    style="color:rgb(236, 252, 10)">Cali - Colombia</span></p>
+                    </div>
+
+                    <div class="col-md-5 d-flex flex-direction justify-content-center">
+                        <div class="footer__imagenes d-flex align-items-center">
+                            <img th:src="@{/img/logo-sin-fondo-icono.png}" alt="logo small"
+                                 class="img-fluid footer__imagenes--1">
+                            <span class="footer__espacio">&nbsp; &nbsp;&nbsp; &nbsp;</span>
+                            <img th:src="@{/img/bandera-de-colombia-con-escudo.jpg}" alt="logo small"
+                                 class="img-fluid footer__imagenes--2">
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div>
+                    <img th:src="@{/img/mediosDePago/barraMediosDePago.png}" class="img-fluid">
+                </div>
+
+
+            </div>
+        </div>
+    </footer>
+</div>
+
+
+<!--popup contact modal-->
+<div th:fragment="modal">
+    <div class="modal fade text-dark" id="contactModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="contacto-popup"></div>
+
+                <div class="modal-header">
+                    <h5 class="modal-title modal-h5">Adquiere nuestros servicios</h5>
+                    <button class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form action="" method="post">
+                        <div class="form-group">
+                            <input type="text" class="form__input" placeholder="Nombre" id="name" name="name" required/>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" class="form__input" placeholder="Email" id="email" name="email"
+                                   required/>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form__input" placeholder="Telefono" name="phone" id="tel"
+                                   required/>
+                        </div>
+
+                        <div class="form-group">
+                        <textarea cols="30" rows="3" class="form__input"
+                                  placeholder="Escribenos, estamos para ayudarte" name="message" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-warning button">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--nuevos estilos js -->
+<div th:fragment="body-bottom-scripts">
+    <script th:src="@{/js/trix.js}"></script>
+
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+    <!--====== Javascripts & Jquery ======-->
+    <script th:src="@{/js/new/jquery.slicknav.min.js}"></script>
+    <script th:src="@{/js/new/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/new/jquery.nicescroll.min.js}"></script>
+    <script th:src="@{/js/new/jquery.zoom.min.js}"></script>
+    <script th:src="@{/js/new/jquery-ui.min.js}"></script>
+    <script th:src="@{/js/new/main.js}"></script>
+    <script th:src="@{/js/toastr.min.js}"></script>
+    <!--nuevos estilos js -->
+
+    <!--Tablas-->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.material.min.js"></script>
+
+
+    <!--para obtener el año actualizado de copyright-->
+    <script>
+        /* // Get the current year for the copyright
+         $("#year").text(new Date().getFullYear());
+
+
+         //colocar la fecha Actual en el date de informes
+         const now = new Date()
+         let day = ("0" + now.getDate()).slice(-2);
+         let month = ("0" + (now.getMonth() + 1)).slice(-2);
+         document.querySelector('.fechaInicio').value = now.getFullYear() + '-'+ month + '-' + day;
+     */
+    </script>
+
+
+    <!--para cambio de color en navbar-->
+    <script>
+        /*    $(window).scroll(function () {
+                if ($("#menu").offset().top > 56) {
+                    $("#menu").addClass("bg-primary");
+                    $("#menu2").addClass("move-super--menu");
+                    console.log('normal');
+                } else {
+                    $("#menu").addClass("return-bg-primary");
+                    $("#menu").removeClass("bg-primary");
+                    $("#menu2").removeClass("move-super--menu");
+                    console.log('con la barra grande si pasa');
+                }
+            });*/
+
+
+        $(document).ready(function () {
+            $(".alertas").fadeOut(7000);
+        });
+
+
+        //tooltips
+        /*    $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })*/
+
+
+        // scroll en pantalla
+        ScrollReveal().reveal('.scrolli');
+        ScrollReveal().reveal('.scrolli', {delay: 700, duration: 1000, reset: false});
+        ScrollReveal().reveal('.scrolli', {scale: 0.85});
+
+
+        //ocultar un elemento
+        //$(".icon-show__box").hide(5);
+        //$(".icon-show__box").delay(2400).fadeIn(1000);
+
+
+        //llama a los datatables jquery plugins
+        $(document).ready(function () {
+            $('#example').DataTable({
+                autoWidth: false,
+                scrollX: false,
+                columnDefs: [
+                    {
+                        targets: ['_all'],
+                        className: 'mdc-data-table__cell'
+                    }
+                ],
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar  _MENU_  Registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla =(",
+                    "sInfo": "Hay _TOTAL_ registros encontrados",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    },
+                    "buttons": {
+                        "copy": "Copiar",
+                        "colvis": "Visibilidad"
+                    }
+                }
+            });
+        });
+
+
+    </script>
+
+
+    <script th:inline="javascript">
+        var success = [[${success}]];
+        var error = [[${error}]];
+        var warning = [[${warning}]];
+        var info = [[${info}]];
+        var tituloSuccess = 'Correcto';
+        var tituloError = 'Error';
+        var tituloWarning = 'Sugerencia';
+        var tituloInfo = 'Info';
+
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "6000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        if (success) {
+            //Swal.fire(tituloSuccess, success, 'success');
+            toastr.success(success, tituloSuccess);
+        } else if (error) {
+            //Swal.fire(tituloError, error, 'error');
+            toastr.error(error, tituloError);
+        } else if (warning) {
+            //Swal.fire(tituloWarning, warning, 'warning');
+            toastr.warning(warning, tituloWarning);
+        } else if (info) {
+            //Swal.fire(tituloInfo, info, 'info');
+            toastr.info(info, tituloInfo);
+        }
+
+    </script>
+</div>
+
+
+</body>
+</html>
+

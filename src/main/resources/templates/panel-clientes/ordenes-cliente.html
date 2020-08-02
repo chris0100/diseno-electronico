@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+<section class="admin-section">
+
+    <div class="container">
+
+        <div th:replace="plantilla/menu-panel-clientes :: menu-panel-clientes"/>
+
+
+        <div class="text-center mt-5 mb-1">
+            <div class="section-title" style="color: #1e29a4;animation: 5s infinite pulse;">
+                <h2 class="font-weight-bold sombra-texto">ORDENES DE COMPRA</h2>
+            </div>
+
+            <div>
+                <p class="sombra-texto">Revisa el detalle de tus ordenes</p>
+            </div>
+        </div>
+
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb site-pagination">
+                <li class="breadcrumb-item"> <a th:href="@{/panel-cliente}">Panel</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Ordenes</li>
+            </ol>
+        </nav>
+
+
+        <hr>
+
+
+        <div class="d-flex justify-content-center">
+            <table id="example" class="mdl-data-table" style="min-width:100%">
+                <thead style="background-color: rgb(65,139,202);color: white">
+                <tr>
+                    <th class="text-white">Codigo</th>
+                    <th class="text-white">Cliente</th>
+                    <th class="text-white">Estado Entrega</th>
+                    <th class="text-white">Total Compra</th>
+                    <th class="text-white">Fecha Creacion</th>
+                    <th ></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:each="orden : ${listaOrdenes}">
+                    <td th:text="${orden.id}">240858</td>
+                    <td th:text="${orden.usuario.nombre}">Christian Rodriguez</td>
+                    <td th:if="${orden.fechaEntregaProducto.after(#dates.createNow())}">En Proceso</td>
+                    <td th:unless="${orden.fechaEntregaProducto.after(#dates.createNow())}">Entregado</td>
+                    <td th:text="'$ ' + ${#numbers.formatDecimal(orden.grandTotal, 0, 'POINT', 0, 'POINT')}">$ 25.000</td>
+                    <td th:text="${#dates.format(orden.fechaRecepcionOrden, 'dd/MMM/yyyy')}">01/05/2020</td>
+                    <td class="text-center">
+                        <a th:href="@{/panel-cliente/ordenes-detalle-cliente/}+${orden.id}" data-toggle="tooltip" data-placement="top" title="Ver Detalle">
+                            <i class="fas fa-eye fa-2x"></i>
+                        </a>
+                        <span class="ml-3"></span>
+                        <a href="#" class="text-danger" data-toggle="tooltip" data-placement="top" title="Descargar">
+                            <i class="far fa-file-pdf fa-2x"></i>
+                        </a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+</body>
+</html>

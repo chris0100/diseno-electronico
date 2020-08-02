@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+
+
+
+<!--boton de llamada-->
+<div class="call-box d-flex justify-content-center align-items-center scrolli"
+     data-toggle="modal"
+     data-target="#contactModal">
+    <i class="fas fa-phone text-primary fa-3x"></i>
+    <p class="call-box__text d-none">Comunicate con <br> nosotros</p>
+    <p class="call-box__number d-none">312 860 3524 <br> 300 344 3901</p>
+</div>
+
+
+<section class="hero-section">
+    <div class="hero-slider owl-carousel">
+        <div class="hs-item set-bg" data-setbg="img/portada-ppal3.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-7 text-white recuadro-ppal">
+                        <span>Diseño Electronico</span>
+                        <h2>Controladores Sensores y Mas</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Quis ipsum sus-pendisse ultrices gravida. Risus commodo
+                            viverra maecenas accumsan lacus vel facilisis. </p>
+                        <a href="#" class="site-btn sb-white">VER SERVICIOS</a>
+                    </div>
+                </div>
+                <div class="offer-card text-white">
+                    <p class="mt-4" style="font-size: 30px">Diseño de</p>
+                    <p class="font-weight-bold" style="font-size: 40px">CIRCUITOS</p>
+                    <p class="font-weight-bold" style="font-size: 40px">IMPRESOS</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="hs-item set-bg" data-setbg="img/portada-ppal6.png">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-7 text-white recuadro-ppal">
+                        <span>Venta de repuestos electronicos</span>
+                        <h2>Al por mayor y detal</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Quis ipsum sus-pendisse ultrices gravida. Risus commodo
+                            viverra maecenas accumsan lacus vel facilisis. </p>
+                        <a href="#" class="site-btn sb-white">VER CATALOGO</a>
+                    </div>
+                </div>
+
+
+                <div class="offer-card text-white">
+                    <span>Desde</span>
+                    <h2>$2<small style="font-size: 20px !important;">mil</small></h2>
+                    <span>COMPRAR</span>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="hs-item set-bg" data-setbg="img/portada-ppal2.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-7 text-white recuadro-ppal">
+                        <h2>Reparación de Tarjetas</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Quis ipsum sus-pendisse ultrices gravida. Risus commodo
+                            viverra maecenas accumsan lacus vel facilisis. </p>
+                        <a href="#" class="site-btn sb-line">CONTACTANOS</a>
+                    </div>
+                </div>
+
+
+                <div class="offer-card text-white">
+                    <p class="mt-5 mb-3" style="font-size: 20px">Implementacion e</p>
+                    <p class="" style="font-size: 20px">Instalación</p>
+                    <p class="font-weight-bold mt-5" style="font-size: 50px">PLCS</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="slide-num-holder" id="snh-1"></div>
+    </div>
+
+</section>
+
+
+<!-- FEATURES section -->
+<section class="features-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 p-0 feature">
+                <div class="feature-inner">
+                    <div class="feature-icon">
+                        <img th:src="@{/img/icons/1.png}" alt="#">
+                    </div>
+                    <h2>PAGOS SEGUROS Y RAPIDOS</h2>
+                </div>
+            </div>
+            <div class="col-md-4 p-0 feature">
+                <div class="feature-inner">
+                    <div class="feature-icon">
+                        <img th:src="@{/img/icons/2.png}" alt="#">
+                    </div>
+                    <h2>Productos y servicios de alta calidad</h2>
+                </div>
+            </div>
+            <div class="col-md-4 p-0 feature">
+                <div class="feature-inner">
+                    <div class="feature-icon">
+                        <img th:src="@{/img/icons/3.png}" alt="#">
+                    </div>
+                    <h2>Entregas Rapidas y seguras</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Features section end -->
+
+
+
+
+
+<!-- ULTIMOS PRODUCTOS section -->
+<section class="top-letest-product-section">
+    <div class="container">
+
+        <div class="text-center heading-secondary__box">
+            <div class="section-title" style="color: #1e29a4;animation: 5s infinite pulse;">
+                <h2 class="font-weight-bold">ULTIMOS PRODUCTOS</h2>
+            </div>
+        </div>
+
+
+        <div th:replace="plantilla/ultimos-productos :: ultimos-productos"/>
+
+    </div>
+</section>
+<!-- ULTIMOS PRODUCTOS section end -->
+
+
+
+
+
+
+
+
+
+<!--seccion con algo de informacion de informacion de la empresa - prestigio-->
+<section class="card-section d-flex align-items-center justify-content-center">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-4 scrolli d-flex justify-content-center">
+                <div class="card bg-gray text-center card-move card-size">
+                    <i class="fas fa-briefcase fa-8x card-icon"></i>
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">Calidad certificada</h5>
+                        <p class="card-text">Somos ingenieros con disposición para suplir las necesidades de las nuevas
+                            tecnologias electronicas brindando soluciones efectivas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 scrolli d-flex justify-content-center">
+                <div class="card bg-gray text-center card-move card-size">
+                    <i class="fas fa-globe-americas fa-8x card-icon"></i>
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">Nuestra cobertura</h5>
+                        <p class="card-text">Contamos con una amplia cobertura de servicios en todo el Sur occidente
+                            colombiano para departamentos de Nariño, Cauca y Valle del Cauca.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 scrolli d-flex justify-content-center">
+                <div class="card bg-gray text-center card-move card-size">
+                    <i class="fas fa-car-battery fa-8x card-icon"></i>
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">Equipos especializados</h5>
+                        <p class="card-text">Poseemos un conjunto de equipos especializados para la deteccion de fallas
+                            y posterior reemplazo de componentes electrónicos dañado.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+
+
+
+
+<!--Algo de informacion de nuestros servicios e imagenes-->
+<section class="bg-reparacion">
+    <div class="container">
+        <div class="text-center heading-secondary__box">
+            <div class="section-title">
+                <h2 class="font-weight-bold" style="color: #1e29a4;animation: 5s infinite pulse;">REPARACIÓN DE TODO TIPO DE CIRCUITOS
+                    ELECTRONICOS DE APLICACIÓN INDUSTRIAL</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 servicios-box scrolli">
+                <li class="paragraph font-weight-bold"> Se maneja el servicio reparación de modulos de control para compresores de aire
+                    tales como Ingersoll-Rand, Atlas Copco, Kaeser y Quincy.
+                </li>
+                <li class="paragraph font-weight-bold">Reparacion de modulos de control electronico para retroexcavadoras marca
+                    Caterpillar y Case 9030b, asi como para variadores de velocidad de diferentes marcas comerciales.
+                </li>
+            </div>
+
+            <!--seccion del slider-->
+            <div class="col-md-6 scrolli">
+                <div class="carousel slide carousel-fade" id="mycarousel" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li class="active" data-target="#mycarousel" data-slide-to="0"></li>
+                        <li data-target="#mycarousel" data-slide-to="1"></li>
+                        <li data-target="#mycarousel" data-slide-to="2"></li>
+                        <li data-target="#mycarousel" data-slide-to="3"></li>
+                    </ol>
+
+                    <!--selector imagenes-->
+                    <div class="carousel-inner">
+                        <div class="carousel-item carousel-img1 active" data-interval="2500">
+                            <div class="carousel-caption"></div>
+                        </div>
+
+                        <div class="carousel-item carousel-img2" data-interval="2500">
+                            <div class="carousel-caption"></div>
+                        </div>
+
+                        <div class="carousel-item carousel-img3" data-interval="2500">
+                            <div class="carousel-caption"></div>
+                        </div>
+
+                        <div class="carousel-item carousel-img4" data-interval="2500">
+                            <div class="carousel-caption"></div>
+                        </div>
+                    </div>
+
+                    <!--controles del carusel-->
+                    <a href="#mycarousel" class="carousel-control-prev" data-slide="prev"><span
+                            class="carousel-control-prev-icon"></span></a>
+
+                    <a href="#mycarousel" class="carousel-control-next" data-slide="next"><span
+                            class="carousel-control-next-icon"></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+<!--seccion con informacion de lo que realiza la empresa-->
+<section class="services-section m-5 pb-5">
+    <div class="services-section__fondo"></div>
+    <div class="container">
+
+        <div class="text-center heading-secondary__box">
+            <div class="section-title" style="color: #1e29a4;  animation: 5s infinite pulse;">
+                <h2 class="font-weight-bold">REPARACIÓN DE MODULOS INTELLISYS</h2>
+            </div>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-1"></div>
+
+            <div class="col-md-10 services__img scrolli m-5">
+                <img th:src="@{/img/consola-3.jpg}" alt="" class="services__img-out services__img-out--1">
+                <img th:src="@{/img/consola22.png}" alt="" class="services__img-out services__img-out--2">
+
+            </div>
+
+            <div class="col-md-1"></div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-slider infinito con marcas->
+<div class="slider-infinito__box">
+    <div class="slider-infinito__img">
+    </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form th:action="@{/add-producto-carrito}" method="get">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="cuerpo">
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+<script th:inline="javascript">
+
+    //Envio de datos prueba desde spring a javascript
+    //var tipo2 = [[${hola}]]
+    //console.log(tipo2)
+
+
+    addProductoCarrito = (nombre, imagen, cantidad, descripcion, id) => {
+        const rutaInicial = window.location.href;
+        console.log(rutaInicial);
+
+        document.getElementById('exampleModalLabel').innerText = nombre;
+        let imagenModal = 'http://localhost:8080/panel-admin/uploads/' + imagen;
+
+
+        //crear etiqueta
+        const divImagen = document.createElement('div');
+        divImagen.innerHTML = `
+                    <div class="d-flex justify-content-center">
+                        <img src="${imagenModal}" class="img-fluid mb-3" width="200px">
+                    </div>
+
+                    <div>
+                        <p>${descripcion}</p>
+                    </div>
+
+                    <div class="quantity" style="margin-bottom: 0px!important;">
+                                <p>Cantidad</p>
+                                <div class="form-group mt-4">
+                                    <input type="number" name="cantidad" class="form-control" value="1" max="${cantidad}" min="1">
+                                    <input type="hidden" name="id" value="${id}">
+                                </div>
+                    </div>`;
+
+        //Cuerpo modal
+        let body = document.querySelector('#cuerpo');
+
+        if (body.childElementCount > 0) {
+            body.firstElementChild.remove();
+        }
+
+        document.querySelector('#cuerpo').appendChild(divImagen);
+    }
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+<section class="admin-section">
+
+    <div class="container">
+
+        <div th:replace="plantilla/menu-panel-clientes :: menu-panel-clientes"/>
+
+
+        <div class="text-center mt-5 mb-4">
+            <div class="section-title" style="color: #1e29a4;animation: 5s infinite pulse;">
+                <h2 class="font-weight-bold sombra-texto">METODOS DE PAGO</h2>
+            </div>
+
+            <div>
+                <p class="sombra-texto">Revisa y modifica tus metodos de pago</p>
+            </div>
+        </div>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb site-pagination">
+                <li class="breadcrumb-item"> <a th:href="@{/panel-cliente}">Panel</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Pagos</li>
+            </ol>
+        </nav>
+
+        <hr>
+
+        <div class="panel">
+            <div class="panel-header">
+                <div class="mb-4">
+                    Tarjeta de Credito / Debito <img th:src="@{/img/mastercart.png}" class="img-fluid">
+                    <a th:href="@{/panel-cliente/form-metodo-pago}" class="btn btn-outline-primary btn-sm float-right"><i class="fas fa-plus"></i> Añadir Tarjeta</a>
+                </div>
+
+            </div>
+
+
+            <div class="panel-body">
+
+
+                <div th:if="${#lists.isEmpty(listaMetodosPago)}" class="text-center">
+                    <p>No hay tarjetas disponibles aún</p>
+                </div>
+
+
+                <!--MUESTRA LISTA DE METODOS DE PAGO DE USUARIO-->
+                <table th:unless="${#lists.isEmpty(listaMetodosPago)}" class="table">
+                    <thead class="thead-light">
+
+                    <tr>
+                        <th scope="col">Tarjetas Disponibles</th>
+                        <th scope="col">Operacion</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    <tr th:each="metodoPago : ${listaMetodosPago}">
+                        <td>
+                            <small th:text="${metodoPago.tipo}">Mastercard</small>  <small>******</small>
+                            <small th:text="${#strings.substring(metodoPago.numeroTarjeta,12,16)}">6045</small>
+                        </td>
+
+                        <td>
+                            <a th:href="@{/panel-cliente/form-metodo-pago?id=}+${metodoPago.id}" class="btn btn-outline-warning btn-sm">Editar</a>
+                            <a th:data1="${metodoPago.tipo}"
+                               th:onclick="|eliminarMetodoPago(${metodoPago.id}, this.getAttribute('data1'))|"
+                               class="btn btn-outline-danger btn-sm btn-eliminar">Eliminar
+                            </a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+<script th:inline="javascript">
+
+    //Envio de datos prueba desde spring a javascript
+    //var tipo2 = [[${hola}]]
+    //console.log(tipo2)
+
+    eliminarMetodoPago = (id, tipo) => {
+        const rutaInicial = window.location.href;
+        console.log(rutaInicial);
+
+        Swal.fire({
+            title: 'Esta seguro de eliminar la tarjeta ' + tipo,
+            text: "Esta accion no puede ser revertida!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.value) {
+                window.location.assign(rutaInicial+'/eliminar-metodo-pago/'+id);
+            }
+        })
+
+    }
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+<section class="super-section">
+
+
+    <nav th:replace="plantilla/menu-panel-admin :: menu-panel-admin"/>
+
+
+
+    <div class="container">
+
+
+        <div class="text-center mb-5" style="margin-top: 100px">
+            <div class="section-title" style="color: #1e29a4;animation: 5s infinite pulse;">
+                <h2 class="font-weight-bold sombra-texto">BIENVENIDO</h2>
+            </div>
+        </div>
+
+        <hr>
+
+
+        <div class="row d-flex justify-content-center">
+            <img th:src="@{/img/super.png}" class="img-fluid" width="300px">
+        </div>
+
+        <div class="row d-flex justify-content-center mt-3">
+            <h4 class="sombra-texto">Christian Alexis Rodriguez</h4>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <span class="sombra-texto">Ultima conexión: 24 de Junio del 2020 5:30 am</span>
+        </div>
+
+
+    </div>
+</section>
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+</body>
+</html>

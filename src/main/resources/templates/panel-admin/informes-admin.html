@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+<section class="super-section">
+
+
+
+    <nav th:replace="plantilla/menu-panel-admin :: menu-panel-admin"/>
+
+
+    <div class="container">
+
+        <div class="text-center"  style="margin-top: 100px">
+            <div class="section-title" style="color: #1e29a4;animation: 5s infinite pulse;">
+                <h2 class="font-weight-bold sombra-texto">INFORMES</h2>
+            </div>
+
+            <div>
+                <p class="sombra-texto">Revisa el informe de ventas de acuerdo a las fechas establecidas</p>
+            </div>
+        </div>
+
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb site-pagination">
+                <li class="breadcrumb-item"> <a th:href="@{/panel-admin}">Panel</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Informes</li>
+            </ol>
+        </nav>
+
+        <hr>
+
+
+        <div class="d-flex justify-content-center">
+
+            <form class="contact-form" th:action="@{/panel-admin/informes-detalle-admin}" method="post">
+
+                <div class="campo d-flex justify-content-center align-items-center" >
+                    <label class="label-pago">Fecha inicio</label>
+                    <input type="date" placeholder="Fecha Inicio" name="fechaInicio" class="form__input w-75 fechaInicio" required>
+                </div>
+
+
+                <div class="campo d-flex justify-content-center align-items-center" >
+                    <label class="label-pago">Fecha fin</label>
+                    <input type="date" placeholder="Fecha Fin" name="fechaFin" class="form__input w-75 fechaFin" required>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <button class="site-btn button" type="submit">GENERAR INFORME</button>
+                    </div>
+                </div>
+
+
+
+            </form>
+
+
+        </div>
+
+
+
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+</body>
+</html>

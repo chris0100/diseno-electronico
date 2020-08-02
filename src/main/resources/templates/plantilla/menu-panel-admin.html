@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<nav th:fragment="menu-panel-admin" class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top-admin" id="menu2" style="padding-left: 115px">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link item-menu-super text-white" th:href="@{/panel-admin/clientes-admin}">Clientes</a>
+                <a class="nav-item nav-link item-menu-super text-white" th:href="@{/panel-admin/informes-admin}">Informes</a>
+                <a class="nav-item nav-link item-menu-super text-white" th:href="@{/panel-admin/productos-admin}">Productos</a>
+                <a class="nav-item nav-link item-menu-super text-white" th:href="@{/panel-admin/cambiar-password-admin}">Cambiar Password</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+</html>

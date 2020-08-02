@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+
+<!-- Page info -->
+<div class="page-top-info">
+    <div class="container">
+        <h4>Catalogo de productos</h4>
+
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb site-pagination">
+                <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Catalogo</li>
+            </ol>
+        </nav>
+
+
+    </div>
+</div>
+<!-- Page info end -->
+
+
+<!-- Category section -->
+<section class="category-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 order-2 order-lg-1">
+                <div class="filter-widget">
+                    <h2 class="fw-title">Categorias</h2>
+                    <ul class="category-menu">
+                        <li th:each="categoria : ${listaCategorias}">
+                            <a th:href="@{/catalogo/}+${categoria}+@{?minimo=}+${minimo}+@{&maximo=}+${maximo}"
+                               th:text="${categoria}"
+                               th:classappend="(${selected} == ${categoria}) ? 'text-primary' : ''"></a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="filter-widget mb-0">
+                    <h2 class="fw-title">Refinar por</h2>
+                    <div class="price-range-wrap">
+                        <h4 style="margin-bottom: 10px!important;">Precio </h4>
+
+                        <div class="text-primary text-center mb-2">
+                            <span th:if="${minimoAjuste}">Rango Seleccionado</span>
+
+                            <br>
+
+                            <span th:if="${minimoAjuste}" th:text="'$ ' +
+                            ${#numbers.formatDecimal(minimoAjuste, 0, 'POINT', 0, 'POINT')}"></span>
+
+                            <span th:if="${minimoAjuste}"> - </span>
+
+                            <span th:if="${maximoAjuste}" th:text="'$ ' +
+                            ${#numbers.formatDecimal(maximoAjuste, 0, 'POINT', 0, 'POINT')}"></span>
+                        </div>
+
+
+                        <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget
+                        ui-widget-content" data-min="" data-max=""
+                             data-th-attr="data-min=${minimo},data-max=${maximo}">
+                            <div class="ui-slider-range ui-corner-all ui-widget-header"
+                                 style="left: 0%; width: 100%;"></div>
+                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"
+                                  style="left: 0%;">
+								</span>
+                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"
+                                  style="left: 100%;">
+								</span>
+                        </div>
+                        <div class="range-slider">
+                            <form th:action="@{/catalogo/precios}" method="get">
+                                <div class="price-input">
+                                    <input type="text" id="minamount" th:name="minimo" th:value="${minimo}">
+                                    <input type="text" id="maxamount" th:name="maximo" th:value="${maximo}">
+                                </div>
+                                <input type="submit" class="btn btn-warning btn-sm" value="Enviar >">
+                                <input type="hidden" name="selected" th:value="${selected}">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
+                <div class="row">
+
+                    <div th:each="producto : ${listaProductos}" class="col-lg-4 col-sm-6">
+                        <div class="product-item">
+                            <div class="pi-pic">
+
+                                <img th:src="@{/panel-admin/uploads/}+${producto.imagen}" class="imagen-catalogo">
+
+                                <div class="pi-links" sec:authorize="hasRole('ROLE_USER')">
+                                    <a class="add-card" style="cursor: pointer"
+                                       th:data1="${producto.nombre}" th:data2="${producto.imagen}"
+                                       th:data3="${producto.cantidad}"
+                                       th:data4="${producto.descripcion}" th:data5="${producto.id}"
+                                       th:onclick="|addProductoCarrito(this.getAttribute('data1'),
+                                       this.getAttribute('data2'),
+                                        this.getAttribute('data3'), this.getAttribute('data4'), this.getAttribute('data5'))|"
+                                       data-target="#exampleModal" data-toggle="modal">
+                                        <i class="fas fa-shopping-cart"></i>
+                                        <span style="font-size: 8px;">AÑADIR AL CARRITO</span>
+                                    </a>
+                                </div>
+
+                            </div>
+                            <div class="pi-text">
+                                <h6 th:text="'$ ' + ${#numbers.formatDecimal(producto.precioVenta, 0, 'POINT', 0, 'POINT')}"></h6>
+                                <a th:href="@{/info-producto/}+${producto.id}" th:text="${producto.nombre}">Rele</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Category section end -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form th:action="@{/add-producto-carrito}" method="get">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="cuerpo">
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+
+<script th:inline="javascript">
+
+    //Envio de datos prueba desde spring a javascript
+    //var tipo2 = [[${hola}]]
+    //console.log(tipo2)
+
+
+    addProductoCarrito = (nombre, imagen, cantidad, descripcion, id) => {
+        const rutaInicial = window.location.href;
+        console.log(rutaInicial);
+
+        document.getElementById('exampleModalLabel').innerText = nombre;
+        let imagenModal = 'http://localhost:8080/panel-admin/uploads/' + imagen;
+
+
+        //crear etiqueta
+        const divImagen = document.createElement('div');
+        divImagen.innerHTML = `
+                    <div class="d-flex justify-content-center">
+                        <img src="${imagenModal}" class="img-fluid mb-3" width="200px">
+                    </div>
+
+                    <div>
+                        <p>${descripcion}</p>
+                    </div>
+
+                    <div class="quantity" style="margin-bottom: 0px!important;">
+                                <p>Cantidad</p>
+                                <div class="form-group mt-4">
+                                    <input type="number" name="cantidad" class="form-control" value="1" max="${cantidad}" min="1">
+                                    <input type="hidden" name="id" value="${id}">
+                                </div>
+                    </div>`;
+
+        //Cuerpo modal
+        let body = document.querySelector('#cuerpo');
+
+        if (body.childElementCount > 0) {
+            body.firstElementChild.remove();
+        }
+
+        document.querySelector('#cuerpo').appendChild(divImagen);
+    }
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+
+<!-- Page info -->
+<div class="page-top-info">
+    <div class="container">
+        <h4>Informacion de Producto</h4>
+
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb site-pagination">
+                <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/catalogo}">Catalogo</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Info Producto</li>
+            </ol>
+        </nav>
+
+
+    </div>
+</div>
+<!-- Page info end -->
+
+
+<!-- product section -->
+<section class="product-section">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-6">
+                <div class="product-pic-zoom">
+                    <img class="product-big-img" th:src="@{/panel-admin/uploads/}+${producto.imagen}">
+                </div>
+            </div>
+
+            <div class="col-lg-6 product-details">
+                <h2 class="p-title" th:text="${producto.nombre}">Juegos de contactos</h2>
+                <h3 class="p-price"
+                    th:text="'$ ' + ${#numbers.formatDecimal(producto.precioVenta, 0, 'POINT', 0, 'POINT')}">
+                    $20.000</h3>
+                <h3 class="p-stock">Disponibilidad:
+                    <span th:if="${producto.cantidad > 10}" th:text="'Mas de 10'">Mas de 10 </span>
+                    <span th:if="${producto.cantidad < 10 && producto.cantidad > 5}"
+                          th:text="'Quedan ' + ${producto.cantidad}"></span>
+                    <span th:if="${producto.cantidad < 5}" th:text="'Quedan tan solo ' + ${producto.cantidad}"
+                          class="text-danger"></span>
+
+                </h3>
+
+                <div class="p-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+
+                <!--                <div class="p-review">
+                                    <a href="">3 comentarios</a>|<a href="">Añadir un comentario o inquietud</a>
+                                </div>-->
+
+
+
+
+                <a th:data1="${producto.nombre}" th:data2="${producto.imagen}" th:data3="${producto.cantidad}"
+                   th:data4="${producto.descripcion}" th:data5="${producto.id}"
+                   th:onclick="|addProductoCarrito(this.getAttribute('data1'), this.getAttribute('data2'),
+                   this.getAttribute('data3'), this.getAttribute('data4'), this.getAttribute('data5'))|"
+                   data-target="#exampleModal" data-toggle="modal"
+                   class="site-btn text-white" sec:authorize="!hasRole('ROLE_ADMIN')"
+                >COMPRAR AHORA</a>
+
+
+                <div id="accordion" class="accordion-area">
+
+                    <div class="panel">
+                        <div class="panel-header" id="headingOne">
+                            <button class="panel-link active" data-toggle="collapse" data-target="#collapse1"
+                                    aria-expanded="true" aria-controls="collapse1">información
+                            </button>
+                        </div>
+                        <div id="collapse1" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="panel-body">
+                                <p th:text="${producto.descripcion}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header" id="headingTwo">
+                            <button class="panel-link" data-toggle="collapse" data-target="#collapse2"
+                                    aria-expanded="false" aria-controls="collapse2">FORMAS DE PAGO
+                            </button>
+                        </div>
+                        <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div class="panel-body">
+                                <img th:src="@{/img/cards.png}" alt="">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra tempor so
+                                    dales. Phasellus sagittis auctor gravida. Integer bibendum sodales arcu id te mpus.
+                                    Ut consectetur lacus leo, non scelerisque nulla euismod nec.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header" id="headingThree">
+                            <button class="panel-link" data-toggle="collapse" data-target="#collapse3"
+                                    aria-expanded="false" aria-controls="collapse3">Envios y devoluciones
+                            </button>
+                        </div>
+                        <div id="collapse3" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                            <div class="panel-body">
+                                <h4>7 Dias maximo para realizar devolucion</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra tempor so
+                                    dales. Phasellus sagittis auctor gravida. Integer bibendum sodales arcu id te mpus.
+                                    Ut consectetur lacus leo, non scelerisque nulla euismod nec.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- product section end -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form th:action="@{/add-producto-carrito}" method="get">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="cuerpo">
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+
+<script th:inline="javascript">
+
+    //Envio de datos prueba desde spring a javascript
+    //var tipo2 = [[${hola}]]
+    //console.log(tipo2)
+
+
+    addProductoCarrito = (nombre, imagen, cantidad, descripcion, id) => {
+        const rutaInicial = window.location.href;
+        console.log(rutaInicial);
+
+        document.getElementById('exampleModalLabel').innerText = nombre;
+        let imagenModal = 'http://localhost:8080/panel-admin/uploads/' + imagen;
+
+
+        //crear etiqueta
+        const divImagen = document.createElement('div');
+        divImagen.innerHTML = `
+                    <div class="d-flex justify-content-center">
+                        <img src="${imagenModal}" class="img-fluid mb-3" width="200px">
+                    </div>
+
+                    <div>
+                        <p>${descripcion}</p>
+                    </div>
+
+                    <div class="quantity" style="margin-bottom: 0px!important;">
+                                <p>Cantidad</p>
+                                <div class="form-group mt-4">
+                                    <input type="number" name="cantidad" class="form-control" value="1" max="${cantidad}" min="1">
+                                    <input type="hidden" name="id" value="${id}">
+                                </div>
+                    </div>`;
+
+        //Cuerpo modal
+        let body = document.querySelector('#cuerpo');
+
+        if (body.childElementCount > 0) {
+            body.firstElementChild.remove();
+        }
+
+        document.querySelector('#cuerpo').appendChild(divImagen);
+    }
+
+
+</script>
+
+
+</body>
+</html>

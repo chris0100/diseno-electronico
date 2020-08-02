@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+<section class="admin-section">
+    <div class="container">
+
+    <div th:replace="plantilla/menu-panel-clientes :: menu-panel-clientes"/>
+
+
+        <div class="text-center my-5">
+            <div class="section-title" style="color: #1e29a4;animation: 5s infinite pulse;">
+                <h2 class="font-weight-bold sombra-texto">BIENVENIDO</h2>
+            </div>
+        </div>
+
+
+        <div class="row d-flex justify-content-center">
+            <img th:if="${#strings.contains(usuario.imagen, 'loginImage')}" th:src="@{/img/loginImage.png}" class="img-fluid" width="300px">
+            <img th:unless="${#strings.contains(usuario.imagen, 'loginImage')}" th:src="@{'/panel-cliente/uploads/'+ ${usuario.imagen}}" class="img-fluid rounded-circle" width="300px">
+        </div>
+
+        <div class="row d-flex justify-content-center mt-3">
+            <h4 class="sombra-texto" th:text="${usuario.nombre}"></h4>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <span class="sombra-texto">Ultima conexión: <span th:text="${usuario.fechaUltimaConexion}"></span></span>
+        </div>
+
+
+    </div>
+</section>
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+</body>
+</html>

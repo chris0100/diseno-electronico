@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+
+<!--boton de llamada-->
+<div class="call-box d-flex justify-content-center align-items-center scrolli" data-toggle="modal"
+     data-target="#contactModal">
+    <i class="fas fa-phone text-primary fa-3x"></i>
+    <p class="call-box__text d-none">
+        Comunícate con <br />
+        nosotros
+    </p>
+    <p class="call-box__number d-none">
+        312 860 3524 <br />
+        300 344 3901
+    </p>
+</div>
+
+
+
+<!--para slider con la imagen de efecto-->
+<section class="header-slide">
+    <div id="servicios-carousel" class="carousel slide carousel-fade imagen-carousel" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#servicios-carousel" class="active" data-slide-to="0"></li>
+            <li data-target="#servicios-carousel" data-slide-to="1"></li>
+            <li data-target="#servicios-carousel" data-slide-to="2"></li>
+        </ol>
+
+        <div class="carousel-inner carousel-height">
+            <div class="carousel-item active " data-interval="2500">
+                <img src="img/montacargas3.jpeg" alt="" class="d-block w-100 " />
+                <div class="carousel-caption-services">
+                    <h1 class="carousel-caption-services__texth1">Reparacion de modulos electronicos para baterias y montacargas</h1>
+                    <p class="carousel-caption-services__textp">
+                        Gnb - Exide - Jungheinrich
+                    </p>
+                </div>
+            </div>
+
+            <div class="carousel-item" data-interval="2500">
+                <img src="img/compresor.jpg" alt="" class="d-block w-100" />
+                <div class="carousel-caption-services">
+                    <h1 class="carousel-caption-services__texth1">Reparación de modulos de control para compresores</h1>
+                    <p class="carousel-caption-services__textp">
+                        Ingersoll-Rand - Atlas Copco - Kaeser - Quincy
+                    </p>
+                </div>
+            </div>
+
+            <div class="carousel-item" data-interval="2500">
+                <img src="img/retroexcavadora case.jpg" alt="" class="d-block w-100" />
+                <div class="carousel-caption-services">
+                    <h1 class="carousel-caption-services__texth1">Reparacion de modulos electrónicos para retroexcavadoras</h1>
+                    <p class="carousel-caption-services__textp">
+                        Caterpillar - Case 9030b
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!--botones-->
+        <a href="#servicios-carousel" class="carousel-control-prev" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </a>
+
+        <a href="#servicios-carousel" class="carousel-control-next" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </a>
+    </div>
+</section>
+
+
+
+
+
+<!--siguiente seccion - algo de informacion de nuestros servicios e imagenes-->
+<section class="bg-soporte">
+    <div class="container">
+        <div class="text-center pb-5">
+            <div class="section-title">
+                <h2 class="font-weight-bold" style="color: #1e29a4;animation: 5s infinite pulse;">REPARACIÓN DE EQUIPOS ELECTRONICOS INDUSTRIALES</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 servicios-box scrolli">
+                <h4 class="heading-tertiary font-weight-bold">Servicio técnico</h4>
+                <li class="paragraph font-weight-bold">
+                    Realizamos mantenimiento preventivo y/o correctivo a equipos entre los cuales están variadores de velocidad, UPS y fuentes de alimentación.</li>
+                <li class="paragraph font-weight-bold">
+                    Reparación de todo tipo de tarjetas y equipos, basados en funcionamiento y diseño electrónico.
+                </li>
+                <div class="btn btn-warning button mb-5 font-weight-bold" data-toggle="modal"
+                     data-target="#contactModal">Conoce mas</div>
+            </div>
+
+            <!--seccion de imagen-->
+            <div class="col-md-6 scrolli d-flex align-items-center">
+                <img src="img/bateria_exide.jpg" alt="imagen-1" class="img_box--1 img-fluid" />
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<!--siguiente seccion - algo de informacion de nuestros servicios e imagenes-->
+<section class="bg-reparacion">
+    <div class="container">
+        <div class="text-center pt-5 mt-5 pb-5">
+            <div class="section-title">
+                <h2 class="font-weight-bold" style="color: #1e29a4;animation: 5s infinite pulse;">DISEÑO DE CIRCUITOS Y PROGRAMACIÓN DE MEMORIAS</h2>
+            </div>
+        </div>
+        <div class="row">
+            <!--seccion de imagen-->
+            <div class="col-md-6 scrolli d-flex align-items-center">
+                <img src="img/programar memoria eprom.png" alt="imagen-1" class="img_box--2 img-fluid" />
+            </div>
+
+            <div class="col-md-6 servicios-box scrolli">
+                <li class="paragraph font-weight-bold">
+                    Diseño de circuitos PCB con todas las normas y estandares actualizadas.
+                </li>
+                <li class="paragraph font-weight-bold">
+                    Montaje e implementacion de PLC a sistemas automatizados.
+                </li>
+                <li class="paragraph font-weight-bold">
+                    Programación de todo tipo de memorias EPROM, PROM, PLDS, FPGAS y microncontroladores.
+                </li>
+                <div class="btn btn-warning button font-weight-bold" data-toggle="modal"
+                     data-target="#contactModal">Conoce mas</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<!-slider infinito con marcas->
+<div class="slider-infinito__box">
+    <div class="slider-infinito__img">
+    </div>
+</div>
+
+
+
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+</body>
+</html>
+
+

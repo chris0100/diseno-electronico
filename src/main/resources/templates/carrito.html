@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+<!-- Page info -->
+<div class="page-top-info">
+    <div class="container">
+
+
+        <h4>Carrito de Compras</h4>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb site-pagination">
+                <li class="breadcrumb-item"> <a th:href="@{/}">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Carrito</li>
+            </ol>
+        </nav>
+
+
+    </div>
+</div>
+<!-- Page info end -->
+
+
+<!-- cart section end -->
+<section class="cart-section spad">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-9">
+                <div class="cart-table sombra-caja">
+                    <h3>Tu carrito</h3>
+
+                    <div class="cart-table-warp" id="carrito">
+
+                        <table th:if="${listaItemCarrito}"  id="lista-carrito">
+                            <thead>
+                            <tr>
+                                <th class="product-th">Producto</th>
+                                <th class="quy-th">Cantidad</th>
+                                <th class="size-th">Descripcion</th>
+                                <th class="total-th">Precio</th>
+                                <th class="total-th"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr th:each="itemsCarrito : ${listaItemCarrito}">
+
+                                <td class="product-col">
+                                    <!--<input type="hidden" th:value="${itemsCarrito.producto.id}" name="id">-->
+                                    <img th:src="@{/panel-admin/uploads/}+${itemsCarrito.producto.imagen}">
+                                    <div class="pc-title">
+                                        <h4 th:text="${itemsCarrito.producto.nombre}"></h4>
+                                        <p th:text="'$ ' +
+                                        ${#numbers.formatDecimal(itemsCarrito.producto.precioVenta, 0,
+                                        'POINT', 0, 'POINT')}"></p>
+                                    </div>
+                                </td>
+
+                                <td class="quy-col">
+                                        <div class="form-group">
+                                            <input type="number" name="cantidad" th:value="${itemsCarrito.cantidad}"
+                                            th:max="${itemsCarrito.producto.cantidad}" min="1" class="form-control productoId"
+                                                   data-th-id="${itemsCarrito.producto.id}">
+                                        </div>
+                                </td>
+
+                                <td class="size-col"><h4 th:text="${itemsCarrito.producto.descripcion}">12 Voltios Original</h4></td>
+
+                                <td class="total-col"><h4 th:text="'$' +
+                                ${#numbers.formatDecimal(itemsCarrito.subtotal, 0,
+                                'POINT', 0, 'POINT')}">$25.000</h4></td>
+
+                                <td>
+                                    <div class="px-3 pb-2">
+                                        <a  th:data1="${itemsCarrito.id}"
+                                                th:onclick="|eliminarItem(${itemsCarrito.producto.id}, this.getAttribute('data1'))|" style="cursor: pointer">
+                                            <i class="fas fa-minus-circle text-danger fa-2x"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+
+
+                            </tbody>
+                        </table>
+
+                        <div th:unless="${listaItemCarrito}" class="mx-5 my-5 text-center">
+                            <h5>Aun no tienes productos en tu carrito, puedes dar click en <span class="font-weight-bold">SEGUIR COMPRANDO.</span></h5>
+                        </div>
+                    </div>
+                    <div class="total-cost">
+                        <h6>Subtotal <span th:if="${carritoCompras}" th:text="'$ ' + ${#numbers.formatDecimal
+                        (carritoCompras.subTotal, 0, 'POINT', 0, 'POINT')}">$115.000</span></h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 card-right">
+                <a th:if="${listaItemCarrito}" th:href="@{/checkout}" class="site-btn">Proceder al pago</a>
+                <a th:href="@{/catalogo}" class="site-btn sb-dark">Seguir Comprando</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- cart section end -->
+
+
+
+<!-- CONTINUA COMPRANDO section -->
+<section class="top-letest-product-section">
+    <div class="container">
+
+        <div class="text-center heading-secondary__box">
+            <div class="section-title" style="color: #1e29a4;animation: 5s infinite pulse;">
+                <h2 class="font-weight-bold">CONTINUA COMPRANDO</h2>
+            </div>
+        </div>
+
+        <div th:replace="plantilla/ultimos-productos :: ultimos-productos"/>
+
+    </div>
+</section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form th:action="@{/add-producto-carrito}" method="get">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="cuerpo">
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+
+
+
+<script>
+
+    //////////////////////////////////////////////
+    //PARA AGREGAR O QUITAR CANTIDADES DEL ITEM
+    ///////////////////////////////////////////////
+    const carrito = document.getElementById('carrito');
+
+    cargarEventListener();
+
+
+    //Event listeners
+    function cargarEventListener() {
+        carrito.addEventListener('click', modificarListaItems);
+    }
+
+    function modificarListaItems(e) {
+        e.preventDefault();
+
+        if (e.target.classList.contains('productoId')){
+            let productoId = e.target.id;
+            console.log('id del producto: ' + productoId)
+            console.log(e.target);
+
+            let valorInput = e.target.value;
+            console.log(valorInput);
+
+            //Ruta de inicio
+            const rutaInicial = window.location.href;
+            const rr = rutaInicial.split('/c')[0]
+            console.log(rr);
+
+            //Va a la ruta para realizar la modificacion
+            window.location.assign(rr+'/modificar-producto-carrito?cantidad='+valorInput+'&id='+productoId);
+        }
+    }
+
+
+    //////////////////////////////////////////////
+    //PARA ELIMINAR EL ITEM
+    ///////////////////////////////////////////////
+    eliminarItem = (productoId, itemCarritoId) =>{
+        console.log('producto: ' + productoId);
+        console.log('itemCarrito: ' + itemCarritoId)
+
+        const rutaInicial = window.location.href;
+        const rr = rutaInicial.split('/c')[0]
+
+        Swal.fire({
+            title: 'Esta seguro de quitar el producto del carrito',
+            text: "Esta accion puede ser revertida luego!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.value) {
+                window.location.assign(rr + '/eliminar-producto-carrito/'+productoId+'/'+itemCarritoId);
+            }
+        })
+    }
+
+
+
+
+
+
+    //Envio de datos prueba desde spring a javascript
+    //var tipo2 = [[${hola}]]
+    //console.log(tipo2)
+
+
+    addProductoCarrito = (nombre, imagen, cantidad, descripcion, id) => {
+        const rutaInicial = window.location.href;
+        console.log(rutaInicial);
+
+        document.getElementById('exampleModalLabel').innerText = nombre;
+        let imagenModal = 'http://localhost:8080/panel-admin/uploads/' + imagen;
+
+
+        //crear etiqueta
+        const divImagen = document.createElement('div');
+        divImagen.innerHTML = `
+                    <div class="d-flex justify-content-center">
+                        <img src="${imagenModal}" class="img-fluid mb-3" width="200px">
+                    </div>
+
+                    <div>
+                        <p>${descripcion}</p>
+                    </div>
+
+                    <div class="quantity" style="margin-bottom: 0px!important;">
+                                <p>Cantidad</p>
+                                <div class="form-group mt-4">
+                                    <input type="number" name="cantidad" class="form-control" value="1" max="${cantidad}" min="1">
+                                    <input type="hidden" name="id" value="${id}">
+                                </div>
+                    </div>`;
+
+        //Cuerpo modal
+        let body = document.querySelector('#cuerpo');
+
+        if (body.childElementCount > 0) {
+            body.firstElementChild.remove();
+        }
+
+        document.querySelector('#cuerpo').appendChild(divImagen);
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:fragment="menu-panel-clientes" class="row d-flex justify-content-center">
+
+    <a th:href="@{/panel-cliente/editar-perfil-cliente}" class="admin-btn admin-btn--primary sombra-caja">Editar Perfil</a>
+    <a th:href="@{/panel-cliente/cambiar-password-cliente}" class="admin-btn admin-btn--danger sombra-caja">Cambiar Password</a>
+    <a th:href="@{/panel-cliente/imagen-cliente}" class="admin-btn admin-btn--info sombra-caja">Imagen de Perfil</a>
+    <a th:href="@{/panel-cliente/ordenes-cliente}" class="admin-btn admin-btn--success sombra-caja">Ver Ordenes</a>
+    <a th:href="@{/panel-cliente/direccion-cliente}" class="admin-btn admin-btn--secondary sombra-caja">Dirección de Envio</a>
+    <a th:href="@{/panel-cliente/metodos-pago-cliente}" class="admin-btn admin-btn--warning sombra-caja">Metodos de Pago</a>
+
+</div>
+
+
+</html>

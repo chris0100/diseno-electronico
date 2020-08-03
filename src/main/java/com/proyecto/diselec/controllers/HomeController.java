@@ -7,11 +7,9 @@ import com.proyecto.diselec.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -160,6 +158,50 @@ public class HomeController {
     @GetMapping("/contactenos")
     public String contactenos(){
         return "contactenos";
+    }
+
+
+
+    @GetMapping("/busqueda")
+    public String busqueda(Model model){
+
+        //Se carga la lista de categorias
+        List<String> listaCategorias = Util.listaCategorias();
+
+        //Se muestra toda la lista de productos
+        List<Producto> listaProductos = new ArrayList<>();
+        listaProductos = productoServiceObj.findAll();
+
+
+        model.addAttribute("listaProductos", listaProductos);
+        model.addAttribute("listaCategorias", listaCategorias);
+
+        return "busqueda";
+    }
+
+
+
+    @PostMapping("/busqueda")
+    public String buscar(@ModelAttribute("barraBusqueda") String dataBusqueda, Model model,
+                         @ModelAttribute("categoria") String categoria){
+
+        List<String> listaCategorias = Util.listaCategorias();
+        List<Producto> listaProductos = new ArrayList<>();
+        System.out.println("ca:" + categoria);
+
+        if (dataBusqueda.equals("")){
+            dataBusqueda = "  ";
+        }
+
+        listaProductos = productoServiceObj.findByNameOrCategoria(dataBusqueda,categoria);
+
+
+
+        model.addAttribute("listaProductos", listaProductos);
+        model.addAttribute("listaCategorias", listaCategorias);
+        model.addAttribute("categoriaSeleccionada", categoria);
+
+        return "busqueda";
     }
 
 

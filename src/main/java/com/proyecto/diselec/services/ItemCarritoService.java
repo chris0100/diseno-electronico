@@ -27,6 +27,8 @@ public interface ItemCarritoService {
 
     List<ItemCarrito> findAllByDate(Date fechaInicio, Date fechaFin);
 
+    void deleteItem(ItemCarrito itemCarrito);
+
 
 
 

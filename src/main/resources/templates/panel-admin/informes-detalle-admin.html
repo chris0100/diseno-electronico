@@ -47,7 +47,7 @@
 
                 <h2 class="sombra-texto">TU BALANCE DE VENTAS ES EL SIGUIENTE:</h2>
 
-                <p class="my-4">Ventas entre el <span th:text="${fechaInicio}">fecha0</span> y el <span th:text="${fechaFin}">fecha1</span></p>
+                <p class="my-4">Fechas entre el <span th:text="${fechaInicio}">fecha0</span> y el <span th:text="${fechaFin}">fecha1</span></p>
 
                 <p class="mt-3">Total Ventas: <span th:text="'$ ' + ${#numbers.formatDecimal(totalVendido,0,'POINT',0,'POINT')}">$150000</span> </p>
 
@@ -55,6 +55,13 @@
 
                 <p class="my-4">Producto mas vendido: <span th:text="${nombreProducto}">nombreproductomasvendido</span>
                     <span>con una cantidad de ventas igual a: <span th:text="${cantidadVentas}"></span></span></p>
+
+
+                <hr>
+
+                <p class="my-4">Cliente con mayor cantidad de compras : <span th:text="${clienteMasVentas}"></span> </p>
+
+                <p class="my-4">Cantidad de compras del cliente <span th:text="${clienteMasVentas}"></span> es de:  <span th:text="${cantidadVentasCliente}"></span> <span> compras.</span></p>
 
             </div>
 

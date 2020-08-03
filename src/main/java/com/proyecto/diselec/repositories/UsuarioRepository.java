@@ -12,6 +12,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Usuario findByUsername(String username);
 
 
+
     //-- Selecciona los usuarios que son tipo role_user
     //select u.id, nombre, username from users u
     //inner join authorities a

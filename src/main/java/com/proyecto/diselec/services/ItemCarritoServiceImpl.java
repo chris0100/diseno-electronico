@@ -81,4 +81,8 @@ public class ItemCarritoServiceImpl implements ItemCarritoService {
     }
 
 
+    @Override
+    public void deleteItem(ItemCarrito itemCarrito) {
+        itemCarritoRepositoryObj.delete(itemCarrito);
+    }
 }

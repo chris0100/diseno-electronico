@@ -275,7 +275,8 @@ public class ComprasController {
     // Pagina para proceder a realizar el checkout
     @GetMapping("/checkout")
     public String checkout(Principal principal, Model model,
-                           @RequestParam(value = "idMetodoPago", required = false) Long idMetodoPago) {
+                           @RequestParam(value = "idMetodoPago", required = false) Long idMetodoPago,
+                           RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
         int checkbox = 0;
         int envioGratis = 0;
@@ -290,6 +291,21 @@ public class ComprasController {
 
         //Se busca la lista de items
         List<ItemCarrito> listaItemCarrito = usuario.getCarritoCompras().getListaItemsCarrito();
+
+
+        //Se revisa disponibilidad del producto en la BD, si no hay cantidad disponible arrojara error
+        for (ItemCarrito obj : listaItemCarrito){
+            if (obj.getCantidad() == 0 || obj.getCantidad() > obj.getProducto().getCantidad()){
+                //Se eliminara ese item del carrito
+                System.out.println("id del itemcarrito" + obj.getId());
+                itemCarritoServiceObj.deleteById(obj.getId());
+
+                //Se redirecciona con mensaje de error
+                redirectAttributes.addFlashAttribute("error", "No hay stock disponible para el item: " + obj.getProducto().getNombre() + "se eliminara de su carrito");
+                return "redirect:/checkout";
+            }
+        }
+
 
         //Se busca la lista de los metodos de pago
         List<MetodoPago> listaMetodosPago = metodoPagoServiceObj.findAllByUsuario(usuario);
@@ -416,7 +432,7 @@ public class ComprasController {
 
         for (ItemCarrito obj : listaItemCarrito ){
             obj.setOrden(orden);
-            obj.getProducto().setCantidad(obj.getCantidad() - obj.getProducto().getCantidad());
+            obj.getProducto().setCantidad(obj.getProducto().getCantidad() - obj.getCantidad());
             itemCarritoServiceObj.save(obj);
         }
 
@@ -426,8 +442,6 @@ public class ComprasController {
 
         //Limpiar el carrito
         carritoComprasServiceObj.limpiarCarrito(carritoCompras);
-
-        //Descontar de productos
 
 
         return "orden_exitosa";

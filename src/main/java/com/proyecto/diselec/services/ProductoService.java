@@ -19,4 +19,12 @@ public interface ProductoService {
 
     List<Producto> findAllByFechaIsBefore(Date fechaActual);
 
+    Producto findByNombre(String nombre);
+
+    List<Producto> findAllByName(String nombreProducto);
+
+    List<Producto> findByNameAndCategoria(String nombreProducto, String categoria);
+
+    List<Producto> findByNameOrCategoria(String nombreProducto, String categoria);
+
 }

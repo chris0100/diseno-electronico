@@ -54,4 +54,27 @@ public class ProductoServiceImpl implements ProductoService {
     public List<Producto> findAllByFechaIsBefore(Date fechaActual) {
         return productoRepositoryObj.findAllByFechaIsBeforeOrderByFechaDesc(fechaActual);
     }
+
+
+    @Override
+    public Producto findByNombre(String nombre) {
+        return productoRepositoryObj.findByNombre(nombre);
+    }
+
+
+    @Override
+    public List<Producto> findAllByName(String nombreProducto) {
+        return productoRepositoryObj.findAllByNombre(nombreProducto);
+    }
+
+
+    @Override
+    public List<Producto> findByNameAndCategoria(String nombreProducto, String categoria) {
+        return productoRepositoryObj.findByNombreAndCategoria(nombreProducto,categoria);
+    }
+
+    @Override
+    public List<Producto> findByNameOrCategoria(String nombreProducto, String categoria) {
+        return productoRepositoryObj.findByNombreOrCategoria(nombreProducto,categoria);
+    }
 }

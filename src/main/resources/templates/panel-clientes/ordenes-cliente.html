@@ -64,7 +64,7 @@
                             <i class="fas fa-eye fa-2x"></i>
                         </a>
                         <span class="ml-3"></span>
-                        <a href="#" class="text-danger" data-toggle="tooltip" data-placement="top" title="Descargar">
+                        <a th:href="@{'/panel-cliente/ordenes-detalle-cliente/' + ${orden.id}(format=pdf)}" class="text-danger" data-toggle="tooltip" data-placement="top" title="Descargar">
                             <i class="far fa-file-pdf fa-2x"></i>
                         </a>
                     </td>

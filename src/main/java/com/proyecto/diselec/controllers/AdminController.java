@@ -1,9 +1,6 @@
 package com.proyecto.diselec.controllers;
 
-import com.proyecto.diselec.models.ItemCarrito;
-import com.proyecto.diselec.models.MasVendido;
-import com.proyecto.diselec.models.Producto;
-import com.proyecto.diselec.models.Usuario;
+import com.proyecto.diselec.models.*;
 import com.proyecto.diselec.services.*;
 import com.proyecto.diselec.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -411,6 +408,8 @@ public class AdminController {
 
 
 
+
+
         //Localizar a traves del id del producto
         Producto producto = productoServiceObj.findOne(resultados.get(0).getProductoId().longValue());
 
@@ -429,12 +428,29 @@ public class AdminController {
 
 
 
+        //Cliente a quien se le ha vendido mas por fechas
+        Query nativoQ = em.createNativeQuery("select count(usuario_id) as cantidadVentas, usuario_id from orden where fecha_recepcion_orden between '"+ fechaInit +"'"+ " and '"+ fechaF +"' " +
+                "group by usuario_id order by cantidadVentas desc limit 1");
+        MejorComprador mejorComprador = new MejorComprador();
+        List<Object[]> objetoQ =  nativoQ.getResultList();
+        mejorComprador.setCantidadVentas((BigInteger) objetoQ.get(0)[0]);
+        mejorComprador.setUsuarioId((BigInteger) objetoQ.get(0)[1]);
+
+        System.out.println(mejorComprador.toString());
+
+
+        Usuario clienteMasVentas = usuarioServiceObj.findById(mejorComprador.getUsuarioId().longValue());
+
+
+
         model.addAttribute("fechaInicio", fechaInit);
         model.addAttribute("fechaFin", fechaF);
         model.addAttribute("totalVendido", totalVendido);
         model.addAttribute("cantidadVentas", resultados.get(0).getMaximo());
         model.addAttribute("nombreProducto", producto.getNombre());
         model.addAttribute("utilidadTotal", utilidadTotal);
+        model.addAttribute("clienteMasVentas", clienteMasVentas.getNombre());
+        model.addAttribute("cantidadVentasCliente",mejorComprador.getCantidadVentas());
 
 
         System.out.println(fechaInicio + ":" + fechaFin);

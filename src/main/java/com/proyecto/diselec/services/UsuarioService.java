@@ -22,4 +22,6 @@ public interface UsuarioService {
     void deleteToken(PasswordResetToken token);
 
     void deleteOtrosToken(Usuario usuario);
+
+
 }

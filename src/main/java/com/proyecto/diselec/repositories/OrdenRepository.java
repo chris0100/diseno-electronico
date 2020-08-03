@@ -18,4 +18,9 @@ public interface OrdenRepository extends JpaRepository<Orden, Long> {
     @Query("select sum(f.GrandTotal) from Orden f where f.fechaRecepcionOrden  between ?1 and ?2")
     double findByDates(Date fechaInicio, Date fechaFin);
 
+    //@Query("select count(ord.usuario.id) as conteo, ord.usuario.id  from Orden ord group by ord.usuario.id order by conteo desc")
+    //List<Usuario> findUsuarioConMasCompras();
+
+
+
 }

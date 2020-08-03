@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="plantilla/template :: common-header"/>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- barra de navegacion-->
+<div th:replace="plantilla/template :: navbar"/>
+
+<section class="login-section">
+    <div class="container text-center" style="margin-bottom: 200px">
+        <div class="row d-flex justify-content-center">
+            <div class="card" style="width: 700px">
+
+                <div class="card-header">
+                    <h3>Busqueda</h3>
+                </div>
+
+
+                <div class="card-body">
+                    <form th:action="@{/busqueda}" method="post">
+
+                        <div class="form-group">
+                            <label for="barraBusqueda">Barra de busqueda </label>
+                            <input type="text" name="barraBusqueda" id="barraBusqueda" class="form-control">
+                        </div>
+
+
+                        <div>
+                            <input type="submit" class="btn btn-primary btn-lg" value="buscar">
+                        </div>
+
+                        <!--th:selected="(${producto.categoria} == ${cat})"-->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="label-pago"> Categoría</label>
+                                <select name="categoria" class="form-control">
+                                    <option value="" selected disabled>Seleccionar</option>
+                                    <option th:each="cat : ${listaCategorias}" th:text="${cat}"
+                                            th:selected="(${categoriaSeleccionada} == ${cat})"
+                                    ></option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <!--Resultados-->
+                    <div th:if="${listaProductos}" class="mt-5 mb-5">
+                        <table class="table table-bordered table-striped table-hover">
+
+                            <thead>
+
+                                <th>id</th>
+                                <th>Nombre Producto</th>
+                                <th>Precio Venta</th>
+                                <th>utilidad</th>
+
+                            </thead>
+
+
+                            <tbody>
+
+                            <tr th:each="producto : ${listaProductos}">
+                                <td th:text="${producto.id}">1</td>
+                                <td th:text="${producto.nombre}">Condensador</td>
+                                <td th:text="'$ ' + ${#numbers.formatDecimal(producto.precioVenta, 0, 'POINT', 0, 'POINT')}">$ 15.000</td>
+                                <td th:text="'$ ' + ${#numbers.formatDecimal(producto.utilidad, 0, 'POINT', 0, 'POINT')}">$ 2.000</td>
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<div th:replace="plantilla/template :: modal"/>
+<footer th:replace="plantilla/template :: footer"/>
+<div th:replace="plantilla/template :: body-bottom-scripts"/>
+
+</body>
+</html>

@@ -27,4 +27,12 @@ public class MasVendido {
     public void setProductoId(BigInteger productoId) {
         this.productoId = productoId;
     }
+
+    @Override
+    public String toString() {
+        return "MasVendido{" +
+                "maximo=" + maximo +
+                ", productoId=" + productoId +
+                '}';
+    }
 }
